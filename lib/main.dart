@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Waaam',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: '반복학습 앱 Waaam'),
     );
   }
 }
@@ -41,12 +41,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final viewModel = MainViewModel(KakaoLogin());
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,21 +64,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   await viewModel.login();
                   setState(() {});
                 },
-                child: const Text('Login')),
+                child: const Text('로그인')),
             ElevatedButton(
                 onPressed: () async {
                   await viewModel.logout();
                   setState(() {});
                 },
-                child: const Text('Logout')),
+                child: const Text('로그아웃')),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This traling comma makes auto-formatting nicer for build methods.
     );
   }
 }
