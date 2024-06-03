@@ -20,10 +20,12 @@ class MainViewModel {
 
       // 액세스 토큰 출력 및 서버로 전송
       String? accessToken = await _socialLogin.getAccessToken();
+      String? refreshToken = await _socialLogin.getRefreshToken();
       print("Access Token: $accessToken");
+      print("Refresh Token: $refreshToken");
 
-      if (accessToken != null) {
-        await sendTokenToServer(accessToken);
+      if (refreshToken != null) {
+        await sendTokenToServer(refreshToken);
       }
     }
   }
