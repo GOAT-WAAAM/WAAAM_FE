@@ -7,8 +7,8 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig
-  var appKey = dotenv.env['jsAppKey'];
-  KakaoSdk.init(javaScriptAppKey: appKey);
+  var appKey = dotenv.env['nativeAppKey'];
+  KakaoSdk.init(nativeAppKey: appKey);
   runApp(const MyApp());
 }
 

@@ -46,9 +46,9 @@ class KakaoLogin implements SocialLogin {
   Future<bool> logout() async {
     try {
       await UserApi.instance.unlink();
-      await _storage.delete(key: "accessToken"); // Delete token on logout
-      await _storage.delete(key: "refreshToken");
-      print("Access token deleted");
+      // await _storage.delete(key: "accessToken"); // Delete token on logout
+      // await _storage.delete(key: "refreshToken");
+      // print("Access token deleted");
       return true;
     } catch (error) {
       print("Error logging out: $error");
@@ -59,10 +59,6 @@ class KakaoLogin implements SocialLogin {
   @override
   Future<String?> getAccessToken() async {
     return await _storage.read(key: "accessToken");
-  }
-  @override
-  Future<String?> getRefreshToken() async {
-    return await _storage.read(key: "refreshToken");
   }
 }
 

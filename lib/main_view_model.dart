@@ -7,7 +7,7 @@ class MainViewModel {
   final SocialLogin _socialLogin;
   bool isLogined = false;
   User? user;
-  final String baseUrl = 'http://192.168.49.17:8080';
+  final String baseUrl = 'http://192.168.48.58:8080';
   final String provider = 'KAKAO';
 
   MainViewModel(this._socialLogin);
@@ -20,12 +20,10 @@ class MainViewModel {
 
       // 액세스 토큰 출력 및 서버로 전송
       String? accessToken = await _socialLogin.getAccessToken();
-      String? refreshToken = await _socialLogin.getRefreshToken();
       print("Access Token: $accessToken");
-      print("Refresh Token: $refreshToken");
 
-      if (refreshToken != null) {
-        await sendTokenToServer(refreshToken);
+      if (accessToken != null) {
+        await sendTokenToServer(accessToken);
       }
     }
   }
