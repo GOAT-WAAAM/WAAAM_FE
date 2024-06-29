@@ -29,7 +29,9 @@ class KakaoLogin implements SocialLogin {
 
       if (token != null) {
         await _storage.write(key: "accessToken", value: token.accessToken);
+        await _storage.write(key: "refreshToken", value: token.refreshToken);
         print("Access token saved: ${token.accessToken}");
+        print("Refresh token saved: ${token.refreshToken}");
         return true;
       } else {
         return false;
@@ -44,8 +46,9 @@ class KakaoLogin implements SocialLogin {
   Future<bool> logout() async {
     try {
       await UserApi.instance.unlink();
-      await _storage.delete(key: "accessToken"); // Delete token on logout
-      print("Access token deleted");
+      // await _storage.delete(key: "accessToken"); // Delete token on logout
+      // await _storage.delete(key: "refreshToken");
+      // print("Access token deleted");
       return true;
     } catch (error) {
       print("Error logging out: $error");
@@ -59,45 +62,3 @@ class KakaoLogin implements SocialLogin {
   }
 }
 
-// import 'package:bocket_test/social_login.dart';
-// import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-//
-// class KakaoLogin implements SocialLogin {
-//   final FlutterSecureStorage _storage = FlutterSecureStorage(); // _storage 초기화
-//
-//   @override
-//   Future<bool> login() async {
-//     try {
-//       bool isInstalled = await isKakaoTalkInstalled();
-//       OAuthToken token; //Token Object
-//       if(isInstalled) {
-//         token = await UserApi.instance.loginWithKakaoTalk();
-//         print(token);
-//       } else {
-//         token = await UserApi.instance.loginWithKakaoAccount();
-//       }
-//
-//       if(token != null){
-//         await _storage.write(key: "accessToken", value: token.accessToken);
-//         return true;
-//       }
-//       return false; // token이 null이면 false 반환
-//     } catch (error) {
-//       print("Error logging in: $error");
-//       return false;
-//     }
-//   }
-//
-//   @override
-//   Future<bool> logout() async {
-//     try {
-//       await UserApi.instance.unlink();
-//       await _storage.delete(key: "accessToken"); // 로그아웃 시 토큰 제거
-//       return true;
-//     } catch (error) {
-//       print("Error logging out: $error");
-//       return false;
-//     }
-//   }
-// }

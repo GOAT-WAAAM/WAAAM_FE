@@ -7,7 +7,7 @@ class MainViewModel {
   final SocialLogin _socialLogin;
   bool isLogined = false;
   User? user;
-  final String baseUrl = 'http://192.168.49.17:8080';
+  final String baseUrl = 'http://192.168.48.58:8080';
   final String provider = 'KAKAO';
 
   MainViewModel(this._socialLogin);
