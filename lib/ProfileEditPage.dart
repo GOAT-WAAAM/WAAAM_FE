@@ -20,31 +20,36 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           children: [
             SizedBox(height: 31),
             Center(
-              child: Stack(
+              child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 45,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage: AssetImage('assets/image/Ellipse.png'),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 45,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: AssetImage('assets/image/Ellipse.png'),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.edit, size: 16),
+                        ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.edit, size: 16),
-                    ),
-                  ),
+                  SizedBox(height: 20),
+                  ProfileField(label: '이름', value: 'de5642'),
+                  SizedBox(height: 20),
+                  ProfileField(label: '전공 / 분야', value: '경영학과'),
+                  SizedBox(height: 20),
+                  ProfileField(label: '학년', value: '3학년'),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            ProfileField(label: '이름', value: 'de5642'),
-            SizedBox(height: 20),
-            ProfileField(label: '전공 / 분야', value: '경영학과'),
-            SizedBox(height: 20),
-            ProfileField(label: '학년', value: '3학년'),
+
           ],
         ),
       ),

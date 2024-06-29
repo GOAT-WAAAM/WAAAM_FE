@@ -11,6 +11,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('계정 정보'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -43,32 +44,36 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Add your logout functionality here
-                },
-                child: Text('로그아웃', style: TextStyle(color: Colors.grey)),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.grey),
+            Center(child: Column(
+              children: [
+                SizedBox(height: 32),
+                SizedBox(
+                  width: 335, height: 50,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      // Add your logout functionality here
+                    },
+                    child: Text('로그아웃', style: TextStyle(color: Colors.grey)),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Add your delete account functionality here
-                },
-                child: Text('회원탈퇴', style: TextStyle(color: Colors.grey)),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.grey),
-                ),
-              ),
-            ),
+                SizedBox(height: 16),
+                SizedBox(
+                  width: 335, height: 50,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      // Add your delete account functionality here
+                    },
+                    child: Text('회원탈퇴', style: TextStyle(color: Colors.grey)),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                ),],
+            ),),
+
           ],
         ),
       ),

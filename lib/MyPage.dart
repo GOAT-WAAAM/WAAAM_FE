@@ -5,6 +5,7 @@ import 'AccountInfoPage.dart';
 import 'ProfileEditPage.dart';
 import '../components/bottom_bar.dart';
 import 'test_page.dart';
+import 'LoginPage.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -27,6 +28,13 @@ class _MyPageState extends State<MyPage> {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
+      routes:{
+        '/accessPage' : (context) => AccessSettingsScreen(),
+        '/notificationPage' : (context) => AlarmSettingsScreen(),
+        '/accountPage' : (context) => AccountInfoScreen(),
+        '/profilePage' : (context) => ProfileEditPage(),
+        // '/logoutPage' : (context) => LoginPage(),  로그아웃 페이지 구현 후 달기
+      },
       home: Scaffold(
           appBar: AppBar(
             centerTitle: false,//나중에 알림 추가되면  true로 바뀌는 함수 생성
@@ -90,7 +98,16 @@ class _MyPageState extends State<MyPage> {
                         NotificationSetting(),
                         AcccountInfo(),
                         SizedBox(height: 121),
-                        Center(child: Text("로그아웃")),//로그아웃 페이지 연결
+                        Center(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/logoutPage');
+                            },
+                            child: Text(
+                              "로그아웃",
+                            ),
+                          ),
+                        ),//로그아웃 페이지 연결
                       ],
 
                     )
@@ -108,12 +125,7 @@ class _MyPageState extends State<MyPage> {
         onItemTapped: _onItemTapped,
       ),
       ),
-      routes:{
-        '/accessPage' : (context) => AccessSettingsScreen(),
-        '/notificationPage' : (context) => AlarmSettingsScreen(),
-        '/accountPage' : (context) => AccountInfoScreen(),
-        '/profilePage' : (context) => ProfileEditPage(),
-      },
+
     );
   }
 }

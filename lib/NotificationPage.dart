@@ -16,6 +16,7 @@ class _AlarmSettingsScreenState extends State<AlarmSettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('알림 설정'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

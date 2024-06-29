@@ -15,6 +15,7 @@ class _AccessSettingsScreenState extends State<AccessSettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('접근권한 설정'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
