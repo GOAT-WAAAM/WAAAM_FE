@@ -14,58 +14,10 @@ class _MainPageState extends State<MainPage> {
   bool isNotifyExist=false;//알림 상태
   int _selectedIndex=0;
 
-
-  // void _showModal() {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (context) {
-  //       return Container(
-  //         padding: EdgeInsets.all(16),
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context); // 모달 닫기
-  //                 Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(builder: (context) => TestPage()), // TestPage로 이동
-  //                 );
-  //               },
-  //               child: Text('Button 1'),
-  //             ),
-  //             SizedBox(height: 16),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context); // 모달 닫기
-  //                 // 다른 작업 수행
-  //               },
-  //               child: Text('Button 2'),
-  //             ),
-  //             SizedBox(height: 16),
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 Navigator.pop(context); // 모달 닫기
-  //                 // 다른 작업 수행
-  //               },
-  //               child: Text('Button 3'),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  void _onItemTapped(int index){
-    if (index==0){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MainPage()),
-      );
-    }else{
-      setState(() {
-        _selectedIndex=index;
-      });
-    }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -113,27 +65,13 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: _getPage(_selectedIndex),
+      body: Center(
+        child: Text('Main Content'), // 예시로 Center 위젯과 Text 위젯을 사용
+      ),
       bottomNavigationBar: BottomBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),
     );
-  }
-  Widget _getPage(int index) {
-    switch (index) {
-      case 0:
-        return MainPageContent(); // 예시로 MainPageContent 사용
-      case 1:
-        return const Placeholder(); // 예시로 Placeholder 사용
-      case 2:
-        return Container(); // 예시로 빈 컨테이너 사용
-      case 3:
-        return const Placeholder(); // 예시로 Placeholder 사용
-      case 4:
-        return const Placeholder(); // 예시로 Placeholder 사용
-      default:
-        return Container();
-    }
   }
 }
