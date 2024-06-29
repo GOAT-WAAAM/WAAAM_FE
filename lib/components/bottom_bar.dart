@@ -1,3 +1,4 @@
+import 'package:bocket_test/MyPage.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -129,7 +130,7 @@ class BottomBar extends StatelessWidget {
               case 4:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>Placeholder()),
+                  MaterialPageRoute(builder: (context)=>MyPage()),
                 );
                 break;
 
