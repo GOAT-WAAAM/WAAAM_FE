@@ -3,6 +3,7 @@ import 'package:bocket_test/home_page/mainpage_content.dart';
 import 'package:bocket_test/test_page.dart';
 import 'package:flutter/material.dart';
 import '../components/bottom_bar.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 

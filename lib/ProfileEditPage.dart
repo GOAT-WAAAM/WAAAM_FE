@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'MyPage.dart';
 
-class ProfileEditPage extends StatelessWidget {
+class ProfileEditPage extends StatefulWidget {
   const ProfileEditPage({Key?key}) : super(key: key);
 
+  @override
+  State<ProfileEditPage> createState() => _ProfileEditPageState();
+}
+
+class _ProfileEditPageState extends State<ProfileEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +52,17 @@ class ProfileEditPage extends StatelessWidget {
   }
 }
 
-class TopBar extends StatelessWidget implements PreferredSizeWidget {
-  const TopBar({super.key});
+class TopBar extends StatefulWidget implements PreferredSizeWidget {
+  const TopBar({Key? key}) : super(key: key); // Corrected constructor
 
   @override
-  Size get preferredSize => Size.fromHeight(54.0);
+  State<TopBar> createState() => _TopBarState();
 
+  @override
+  Size get preferredSize => Size.fromHeight(54.0); // Implemented preferredSize getter
+}
+
+class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,19 +88,25 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class ProfileField extends StatelessWidget {
+
+class ProfileField extends StatefulWidget {
   final String label;
   final String value;
 
   const ProfileField({super.key, required this.label, required this.value});
 
   @override
+  State<ProfileField> createState() => _ProfileFieldState();
+}
+
+class _ProfileFieldState extends State<ProfileField> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label,
+          widget.label,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -107,7 +123,7 @@ class ProfileField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            value,
+            widget.value,
             style: TextStyle(
               fontSize: 14,
               fontStyle: FontStyle.normal,

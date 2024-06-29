@@ -10,8 +10,7 @@ void main() async {
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig
   var appKey = dotenv.env['nativeAppKey'];
   KakaoSdk.init(nativeAppKey: appKey);
-  runApp(const MyApp()
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,10 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home:const MainPage(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

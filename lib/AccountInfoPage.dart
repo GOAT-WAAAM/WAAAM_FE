@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'MyPage.dart';
 
-class AccountInfoScreen extends StatelessWidget {
+class AccountInfoScreen extends StatefulWidget {
+  @override
+  State<AccountInfoScreen> createState() => _AccountInfoScreenState();
+}
+
+class _AccountInfoScreenState extends State<AccountInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

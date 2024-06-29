@@ -3,17 +3,64 @@ import 'NotificationPage.dart';
 import 'AccessPage.dart';
 import 'AccountInfoPage.dart';
 import 'ProfileEditPage.dart';
+import '../components/bottom_bar.dart';
+import 'test_page.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   const MyPage({super.key});
+
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  bool isNotifyExist=false;//알림 상태
+  int _selectedIndex=0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
-            title: Text("마이페이지"),
+            centerTitle: false,//나중에 알림 추가되면  true로 바뀌는 함수 생성
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 19, top: 18, bottom: 16),
+                  child: Text("마이페이지"),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=>const TestPage()),//TestPage 나중에 알림 페이지로 바꾸기
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20, top: 15, bottom: 15),
+                  child: Image.asset(
+                    isNotifyExist
+                        ? 'assets/image/bell_color.png'
+                        : 'assets/image/bell_default.png',
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+              )
+            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -21,31 +68,45 @@ class MyPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyInfo(), //1. 나의정보
-                  SizedBox( //2. 목표
-                      width: 335, height: 40,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 0.5,
-                                )),
-                            hintText: "나의 목표를 입력해 보세요.",
-                            hintStyle: TextStyle(fontSize: 12, color: Colors.grey)),
-                      )),
-                  SizedBox(height: 26,),
-                  AccessSetting(),
-                  NotificationSetting(),
-                  AcccountInfo(),
-                  SizedBox(height: 121),
-                  Center(child: Text("로그아웃")),//로그아웃 페이지 연결
+                  Center(
+                    child:
+                    Column(
+                      children: [
+                        SizedBox( //2. 목표
+                            width: 335, height: 40,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.5,
+                                      )),
+                                  hintText: "나의 목표를 입력해 보세요.",
+                                  hintStyle: TextStyle(fontSize: 12, color: Colors.grey)),
+                            )),
+                        SizedBox(height: 26,),
+                        AccessSetting(),
+                        NotificationSetting(),
+                        AcccountInfo(),
+                        SizedBox(height: 121),
+                        Center(child: Text("로그아웃")),//로그아웃 페이지 연결
+                      ],
+
+                    )
+
+                  ),
+
                 ]),
-          )
+          ),
         //1. 나의 정보
         // 2. 목표
         // 3. 설정
         // 4. 로그아웃,
+        bottomNavigationBar: BottomBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
       ),
       routes:{
         '/accessPage' : (context) => AccessSettingsScreen(),
@@ -57,9 +118,14 @@ class MyPage extends StatelessWidget {
   }
 }
 
-class MyInfo extends StatelessWidget {
+class MyInfo extends StatefulWidget {
   const MyInfo({super.key});
 
+  @override
+  State<MyInfo> createState() => _MyInfoState();
+}
+
+class _MyInfoState extends State<MyInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,9 +154,14 @@ class MyInfo extends StatelessWidget {
         ));
   }
 }
-class AccessSetting extends StatelessWidget {
+class AccessSetting extends StatefulWidget {
   const AccessSetting({super.key});
 
+  @override
+  State<AccessSetting> createState() => _AccessSettingState();
+}
+
+class _AccessSettingState extends State<AccessSetting> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,9 +191,14 @@ class AccessSetting extends StatelessWidget {
     );
   }
 }
-class NotificationSetting extends StatelessWidget {
+class NotificationSetting extends StatefulWidget {
   const NotificationSetting({super.key});
 
+  @override
+  State<NotificationSetting> createState() => _NotificationSettingState();
+}
+
+class _NotificationSettingState extends State<NotificationSetting> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -150,9 +226,14 @@ class NotificationSetting extends StatelessWidget {
     );
   }
 }
-class AcccountInfo extends StatelessWidget {
+class AcccountInfo extends StatefulWidget {
   const AcccountInfo({super.key});
 
+  @override
+  State<AcccountInfo> createState() => _AcccountInfoState();
+}
+
+class _AcccountInfoState extends State<AcccountInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
