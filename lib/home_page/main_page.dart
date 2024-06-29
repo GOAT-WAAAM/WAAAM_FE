@@ -12,63 +12,68 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool isNotifyExist=false;//알림 상태
-  // int _selectedIndex=0;
+  int _selectedIndex=0;
 
-  // static const List<Widget> _pages=[
-  //   MainPage(),
-  //   TestPage(),
-  //   Placeholder(),
-  //   TestPage(),
-  //   TestPage(),
-  // ];
-  // void _showPopupMenu() {
+
+  // void _showModal() {
   //   showModalBottomSheet(
   //     context: context,
   //     builder: (context) {
-  //       return ModalComponent(
-  //         cameraPage: () {
-  //           Navigator.pop(context);
-  //           Navigator.push(
-  //             context,
-  //             MaterialPageRoute(builder: (context) => CameraView()),
-  //           );
-  //         },
-  //         albumPage: () {
-  //           Navigator.pop(context);
-  //           Navigator.push(
-  //             context,
-  //             MaterialPageRoute(builder: (context) => CameraView()),
-  //           );
-  //         },
-  //         writePage: () {
-  //           Navigator.pop(context);
-  //           Navigator.push(
-  //             context,
-  //             MaterialPageRoute(builder: (context) => TestPage()),
-  //           );
-  //         },
+  //       return Container(
+  //         padding: EdgeInsets.all(16),
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context); // 모달 닫기
+  //                 Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(builder: (context) => TestPage()), // TestPage로 이동
+  //                 );
+  //               },
+  //               child: Text('Button 1'),
+  //             ),
+  //             SizedBox(height: 16),
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context); // 모달 닫기
+  //                 // 다른 작업 수행
+  //               },
+  //               child: Text('Button 2'),
+  //             ),
+  //             SizedBox(height: 16),
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context); // 모달 닫기
+  //                 // 다른 작업 수행
+  //               },
+  //               child: Text('Button 3'),
+  //             ),
+  //           ],
+  //         ),
   //       );
   //     },
   //   );
   // }
-  //
-  // void _onItemTapped(int index){
-  //   if (index==0){
-  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainPage()),
-  //     );
-  //   }else{
-  //     setState(() {
-  //       _selectedIndex=index;
-  //     });
-  //   }
-  // }
+
+  void _onItemTapped(int index){
+    if (index==0){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MainPage()),
+      );
+    }else{
+      setState(() {
+        _selectedIndex=index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(54),
+        preferredSize: const Size.fromHeight(54),
         child: AppBar(
           centerTitle: false,//나중에 알림 추가되면  true로 바뀌는 함수 생성
           title: Row(
@@ -91,7 +96,7 @@ class _MainPageState extends State<MainPage> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>TestPage()),//TestPage 나중에 알림 페이지로 바꾸기
+                  MaterialPageRoute(builder: (context)=>const TestPage()),//TestPage 나중에 알림 페이지로 바꾸기
                 );
               },
               child: Padding(
@@ -108,19 +113,27 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: MainPageContent(),
-      // body: Center(
-      //   child: _pages.elementAt(_selectedIndex),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _showPopupMenu,
-      //   child: Image.asset('assets/image/floating.png'),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomBar(
-      //   selectedIndex: _selectedIndex,
-      //   onItemTapped: _onItemTapped,
-      // ),
+      body: _getPage(_selectedIndex),
+      bottomNavigationBar: BottomBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     );
+  }
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return MainPageContent(); // 예시로 MainPageContent 사용
+      case 1:
+        return const Placeholder(); // 예시로 Placeholder 사용
+      case 2:
+        return Container(); // 예시로 빈 컨테이너 사용
+      case 3:
+        return const Placeholder(); // 예시로 Placeholder 사용
+      case 4:
+        return const Placeholder(); // 예시로 Placeholder 사용
+      default:
+        return Container();
+    }
   }
 }

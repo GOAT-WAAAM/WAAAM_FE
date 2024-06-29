@@ -12,38 +12,39 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          //home navigation bar
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/image/home_default.png', width: 48,height: 48,),
-            activeIcon: Image.asset('assets/image/home_active.png',width: 48,height: 48,),
-          ),
-          //게시판 버튼
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/image/community_default.png', width: 48,height: 48,),
-            activeIcon: Image.asset('assets/image/community_active.png',width: 48,height: 48,),
-          ),
-          //+버튼
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/image/modalbutton.png')
-          ),
-          //folder
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/image/folder_default.png', width: 48,height: 48,),
-            activeIcon: Image.asset('assets/image/folder_active.png',width: 48,height: 48,),
-          ),
-          //mypage button
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/image/mypage_default.png', width: 48,height: 48,),
-            activeIcon: Image.asset('assets/image/mypage_active.png',width: 48,height: 48,),
-          ),
-        ],
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
-      ),
+    return SizedBox(
+        height: 84,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Image.asset('assets/image/home_default.png', width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/home_active.png',width: 48,height: 48,),
+              label: '', // 항목의 레이블 추가
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset('assets/image/review_default.png', width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/review_active.png',width: 48,height: 48,),
+              label: '', // 항목의 레이블 추가
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset('assets/image/plus.png', width: 48,height: 48,),
+              label: '', // 레이블이 필요 없는 항목은 빈 문자열로 지정
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset('assets/image/folder_default.png', width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/folder_active.png',width: 48,height: 48,),
+              label: '', // 항목의 레이블 추가
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset('assets/image/mypage_default.png', width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/mypage_active.png',width: 48,height: 48,),
+              label: '', // 항목의 레이블 추가
+            ),
+          ],
+          currentIndex: selectedIndex,
+          onTap: onItemTapped,
+        ),
     );
   }
 }
