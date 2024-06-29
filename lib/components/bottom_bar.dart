@@ -1,5 +1,7 @@
 import 'package:bocket_test/MyPage.dart';
+import 'package:bocket_test/WriteContent/FirstPage.dart';
 import 'package:bocket_test/home_page/main_page.dart';
+import 'package:bocket_test/upload_page/camera_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
@@ -37,13 +39,18 @@ class BottomBar extends StatelessWidget {
                   Navigator.pop(context); // 모달 닫기
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>Placeholder()),
+                    MaterialPageRoute(builder: (context)=>CameraView()),
                   );// 다른 작업 수행
                 },
-                child: Text('촬영하기'),
+                child: Text('촬영하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
               ),
               SizedBox(height: 16),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+
+                ),
                 onPressed: () {
                   Navigator.pop(context); // 모달 닫기
                   Navigator.push(
@@ -51,18 +58,23 @@ class BottomBar extends StatelessWidget {
                     MaterialPageRoute(builder: (context)=>Placeholder()),
                   );
                 },
-                child: Text('앨범에서 불러오기'),
+                child: Text('앨범에서 불러오기',style: TextStyle(color: Colors.black,fontSize: 14,),),
               ),
               SizedBox(height: 16),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+
+                ),
                 onPressed: () {
                   Navigator.pop(context); // 모달 닫기
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=>Placeholder()),
+                    MaterialPageRoute(builder: (context)=>FirstPage()),
                   );
                 },
-                child: Text('직접 작성하기'),
+                child: Text('직접 작성하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
               ),
             ],
           ),
