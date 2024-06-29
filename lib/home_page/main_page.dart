@@ -65,9 +65,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: Center(
-        child: Text('Main Content'), // 예시로 Center 위젯과 Text 위젯을 사용
-      ),
+      body: MainPageContent(),
       bottomNavigationBar: BottomBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
