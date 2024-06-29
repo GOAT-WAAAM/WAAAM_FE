@@ -27,8 +27,8 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
+//apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+//from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
     namespace "com.example.bocket_test"
