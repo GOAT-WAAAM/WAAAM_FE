@@ -145,7 +145,6 @@ class BottomBar extends StatelessWidget {
                   MaterialPageRoute(builder: (context)=>MyPage()),
                 );
                 break;
-
             }
           },
         ),
