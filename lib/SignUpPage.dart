@@ -1,3 +1,4 @@
+import 'package:bocket_test/onBoarding2.dart';
 import 'package:flutter/material.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
@@ -46,7 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             SizedBox(height: 40,),
-            TextButton(onPressed: () {}, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
+            TextButton(onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => onBoard2()),
+              );
+            }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
             Text(
               '${viewModel.isLogined}',
               style: Theme.of(context).textTheme.headlineMedium,
