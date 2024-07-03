@@ -12,8 +12,8 @@ import 'onBoarding2.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig
-  var appKey = dotenv.env['jsAppKey'];
-  KakaoSdk.init(javaScriptAppKey: appKey);
+  var appKey = dotenv.env['nativeAppKey'];
+  KakaoSdk.init(nativeAppKey: appKey);
   runApp(const MyApp());
 }
 
