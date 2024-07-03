@@ -101,7 +101,7 @@ class _onBoard2State extends State<onBoard2> {
                       '다음',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
                   ),

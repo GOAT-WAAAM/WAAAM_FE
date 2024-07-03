@@ -6,6 +6,7 @@ import 'package:bocket_test/onBoarding3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'MyPage.dart';
 import 'SignUpPage.dart';
 import 'onBoarding2.dart';
 void main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: onBoard3(),
+      home: MyPage(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

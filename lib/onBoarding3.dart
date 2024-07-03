@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page/main_page.dart';
 import 'onBoarding2.dart';
+import 'onBoardingComplete.dart';
 
 class onBoard3 extends StatefulWidget {
   final String? nickname;
@@ -114,13 +115,13 @@ class _onBoard3State extends State<onBoard3> {
                       ? () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
+                      MaterialPageRoute(builder: (context) => onBoardCmpt(nickname: widget.nickname)),
                     );
                   }
                       : null,
                   child: Container(
                     alignment: Alignment.center,
-                    width: double.infinity,
+                    width: 290,
                     height: 60,
                     decoration: BoxDecoration(
                       color: isAnyGoalSelected ? Color(0xFF02B6B4) : Color(0xFFBABFCA),
@@ -130,7 +131,7 @@ class _onBoard3State extends State<onBoard3> {
                       '다음',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
                   ),
