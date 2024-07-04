@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'home_page/main_page.dart';
 import 'onBoarding2.dart';
 import 'onBoardingComplete.dart';
 

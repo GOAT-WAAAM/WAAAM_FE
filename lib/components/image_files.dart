@@ -1,4 +1,4 @@
-import 'package:bocket_test/test_page.dart';
+import 'package:bocket_test/Notify/test_page.dart';
 import 'package:flutter/material.dart';
 
 class ImageFiles extends StatelessWidget {

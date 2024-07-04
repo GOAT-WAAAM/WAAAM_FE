@@ -1,14 +1,9 @@
-import 'package:bocket_test/LoginPage.dart';
-import 'package:bocket_test/home_page/main_page.dart';
-import 'package:bocket_test/kakao_login.dart';
-import 'package:bocket_test/main_view_model.dart';
-import 'package:bocket_test/onBoarding3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'MyPage.dart';
-import 'SignUpPage.dart';
-import 'onBoarding2.dart';
+
+import 'my_page/MyPage.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig

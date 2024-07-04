@@ -1,7 +1,7 @@
-import 'package:bocket_test/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'social_login.dart';
 
 class MainViewModel {
   final SocialLogin _socialLogin;

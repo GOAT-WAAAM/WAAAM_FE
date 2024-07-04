@@ -1,8 +1,9 @@
-import 'package:bocket_test/MyPage.dart';
 import 'package:bocket_test/WriteContent/FirstPage.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:bocket_test/upload_page/camera_view.dart';
 import 'package:flutter/material.dart';
+
+import '../my_page/MyPage.dart';
 
 class BottomBar extends StatelessWidget {
 

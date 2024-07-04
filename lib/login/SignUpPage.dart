@@ -1,4 +1,4 @@
-import 'package:bocket_test/onBoarding2.dart';
+import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:flutter/material.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';

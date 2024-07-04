@@ -1,4 +1,4 @@
-import 'package:bocket_test/SignUpPage.dart';
+import 'package:bocket_test/login/SignUpPage.dart';
 import 'package:flutter/material.dart';
 import 'onBoarding3.dart';
 
