@@ -12,8 +12,8 @@ import 'onBoarding2.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig
-  var appKey = dotenv.env['nativeAppKey'];
-  KakaoSdk.init(nativeAppKey: appKey);
+  var appKey = dotenv.env['jsAppKey'];
+  KakaoSdk.init(javaScriptAppKey: appKey);
   runApp(const MyApp());
 }
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: MyPage(),
+      home: MyHomePage(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
