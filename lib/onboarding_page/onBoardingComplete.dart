@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_page/main_page.dart';
+import '../home_page/main_page.dart';
 
 class onBoardCmpt extends StatefulWidget {
   final String? nickname;

@@ -1,4 +1,4 @@
-import 'package:bocket_test/social_login.dart';
+import 'package:bocket_test/login/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

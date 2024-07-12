@@ -1,8 +1,9 @@
-import 'package:bocket_test/MyPage.dart';
 import 'package:bocket_test/WriteContent/FirstPage.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:bocket_test/upload_page/camera_view.dart';
 import 'package:flutter/material.dart';
+
+import '../my_page/MyPage.dart';
 
 class BottomBar extends StatelessWidget {
 
@@ -20,64 +21,94 @@ class BottomBar extends StatelessWidget {
       context: context,
       backgroundColor:Colors.black.withOpacity(0),
       builder: (context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0), bottom: Radius.circular(20.0)), // 모달 상단에 둥근 모서리 적용
-          ),
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              bottom: 102,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 33, right: 33, bottom: 20, top: 20),
+                child: Container(
+                  width: 212,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20), // 모달 상단에 둥근 모서리 적용
+                  ),
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
 
-                ),
-                onPressed: () {
-                  Navigator.pop(context); // 모달 닫기
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>CameraView()),
-                  );// 다른 작업 수행
-                },
-                child: Text('촬영하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context); // 모달 닫기
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>CameraView()),
+                          );// 다른 작업 수행
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset('assets/image/camera.png',width: 24, height: 24,),
+                            SizedBox(width: 18,),
+                            Text('촬영하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
 
-                ),
-                onPressed: () {
-                  Navigator.pop(context); // 모달 닫기
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>Placeholder()),
-                  );
-                },
-                child: Text('앨범에서 불러오기',style: TextStyle(color: Colors.black,fontSize: 14,),),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context); // 모달 닫기
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>Placeholder()),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset('assets/image/album.png',width: 24, height: 24,),
+                            SizedBox(width: 18,),
+                            Text('앨범에서 불러오기',style: TextStyle(color: Colors.black,fontSize: 14,),),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
 
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context); // 모달 닫기
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>FirstPage()),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Image.asset('assets/image/write.png',width: 24, height: 24,),
+                            SizedBox(width: 18,),
+                            Text('직접 작성하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context); // 모달 닫기
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>FirstPage()),
-                  );
-                },
-                child: Text('직접 작성하기',style: TextStyle(color: Colors.black,fontSize: 14,),),
               ),
-            ],
-          ),
+            ),
+          ]
         );
       },
     );
@@ -85,9 +116,11 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         height: 84,
         child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+           // 0 box-shadow: 0px 4px 8.4px 0px rgba(0, 0, 0, 0.02);
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(

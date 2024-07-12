@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'NotificationPage.dart';
 import 'AccessPage.dart';
 import 'AccountInfoPage.dart';
+import 'NotificationPage.dart';
+import '../Notify/test_page.dart';
 import 'ProfileEditPage.dart';
 import '../components/bottom_bar.dart';
-import 'test_page.dart';
 // import 'LoginPage.dart'; // Uncomment this when the page is implemented
 
 class MyPage extends StatefulWidget {
