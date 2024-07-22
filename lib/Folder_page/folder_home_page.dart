@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../components/add_subject_popup.dart';
 
 class FolderMainPage extends StatefulWidget {
   @override
@@ -6,6 +8,13 @@ class FolderMainPage extends StatefulWidget {
 }
 
 class _FolderState extends State<FolderMainPage> {
+  List<String> classes = ["경영과학", "경영과학", "경영과학", "경영과학"];
+  void _addClass(String newClass) {
+    setState(() {
+      classes.add(newClass);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,14 +80,10 @@ class _FolderState extends State<FolderMainPage> {
                       style:
                       TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 16),
-                  CustomListTile(title: "경영과학"),
-                  CustomListTile(title: "경영과학"),
-                  CustomListTile(title: "경영과학"),
-                  CustomListTile(title: "경영과학"),
-                  NewClass(),
-                  ReviewBox(), TrashBin(),
-
-
+                  ...classes.map((cls) => CustomListTile(title: cls)).toList(),
+                  NewClass(onAddClass: _addClass),
+                  ReviewBox(),
+                  TrashBin(),
                 ],
               ),
             ),
@@ -176,7 +181,7 @@ class _CustomListTileState extends State<CustomListTile> {
       width: 335,
       height: 51,
       decoration: BoxDecoration(
-        color: Color(0xFFF7F7F7), borderRadius: BorderRadius.circular(8), border: Border.all(color: Color(0xffF7F7F7),width: 1 )
+          color: Color(0xFFF7F7F7), borderRadius: BorderRadius.circular(8), border: Border.all(color: Color(0xffF7F7F7),width: 1 )
       ),
       padding: EdgeInsets.all(14),
       margin: EdgeInsets.only(bottom: 8),
@@ -244,7 +249,7 @@ class _TrashBinState extends State<TrashBin> {
       margin: EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          Image.asset('assets/image/subject.png', width: 26, height: 26,),
+          SvgPicture.asset('assets/svg/trash_bin.svg'),
           SizedBox(width: 8),
           Expanded(
             child: Text("휴지통",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),),
@@ -256,31 +261,46 @@ class _TrashBinState extends State<TrashBin> {
 }
 
 class NewClass extends StatefulWidget {
-  const NewClass({super.key});
+  final Function(String) onAddClass;
+  const NewClass({super.key, required this.onAddClass});
 
   @override
   State<NewClass> createState() => _NewClassState();
 }
 
 class _NewClassState extends State<NewClass> {
+  void _showAddClassDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AddSubjectPopup(
+          onAddClass: widget.onAddClass,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 335,
-      height: 51,
-      decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(8), border: Border.all(color: Color(0xFFD5D8DD),width: 1,  )
-      ),
-      padding: EdgeInsets.all(14),
-      margin: EdgeInsets.only(bottom: 8),
-      child: Row(
-        children: [
-          Image.asset('assets/image/subject.png', width: 26, height: 26,),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text("새 과목", style: TextStyle(color: Color(0xFFD5D8DD), fontSize: 16, fontWeight: FontWeight.w500)),),
-          Icon(Icons.chevron_right),
-        ],
+    return InkWell(
+      onTap: _showAddClassDialog,
+      child: Container(
+        width: 335,
+        height: 51,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), border: Border.all(color: Color(0xFFD5D8DD), width: 1,)
+        ),
+        padding: EdgeInsets.all(14),
+        margin: EdgeInsets.only(bottom: 8),
+        child: Row(
+          children: [
+            SvgPicture.asset('assets/svg/plus.svg'),
+            SizedBox(width: 8),
+            Expanded(
+              child: Text("새 과목", style: TextStyle(color: Color(0xFFD5D8DD), fontSize: 16, fontWeight: FontWeight.w500)),),
+            Icon(Icons.chevron_right),
+          ],
+        ),
       ),
     );
   }

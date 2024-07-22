@@ -62,6 +62,7 @@ class _onBoard2State extends State<onBoard2> {
           ),
         ),
         body: Container(
+          height: 800,
           margin: EdgeInsets.fromLTRB(20, 27, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

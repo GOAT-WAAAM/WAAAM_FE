@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../components/LogoutPopup.dart';
+import '../components/SignoutPopup.dart';
 import 'MyPage.dart';
+
 
 class AccountInfoScreen extends StatefulWidget {
   @override
@@ -52,7 +55,12 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                   width: 335, height: 50,
                   child: OutlinedButton(
                     onPressed: () {
-                      // Add your logout functionality here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return LogoutPopup();
+                        },
+                      );
                     },
                     child: Text('로그아웃', style: TextStyle(color: Colors.grey)),
                     style: OutlinedButton.styleFrom(
@@ -65,7 +73,12 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                   width: 335, height: 50,
                   child: OutlinedButton(
                     onPressed: () {
-                      // Add your delete account functionality here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SignoutPopup();
+                        },
+                      );
                     },
                     child: Text('회원탈퇴', style: TextStyle(color: Colors.grey)),
                     style: OutlinedButton.styleFrom(
@@ -74,7 +87,6 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                   ),
                 ),],
             ),),
-
           ],
         ),
       ),

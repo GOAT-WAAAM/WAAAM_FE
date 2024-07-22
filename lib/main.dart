@@ -1,3 +1,6 @@
+import 'package:bocket_test/components/QuitPopup.dart';
+import 'package:bocket_test/login/LoginPage.dart';
+import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: FolderMainPage(),
+      home: MyHomePage(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

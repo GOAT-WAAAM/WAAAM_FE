@@ -73,6 +73,7 @@ flutter:
     - .env # path to your .env file
     - assets/image/
     - assets/fonts/
+    - assets/svg/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

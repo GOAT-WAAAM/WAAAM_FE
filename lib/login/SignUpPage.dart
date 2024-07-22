@@ -1,5 +1,6 @@
 import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:flutter/material.dart';
+import '../home_page/main_page.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
 
@@ -36,7 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 GestureDetector(
                   onTap: () async {
                     await viewModel.login();
-                    setState(() {});
+                    setState(() {
+                      if (viewModel.isLogined) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainPage()),
+                        );
+                      }
+                    });
                   },
                   child: Image.asset(
                     'assets/image/kakao.png',
@@ -53,10 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => onBoard2()),
               );
             }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
-            Text(
-              '${viewModel.isLogined}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
           ],
         ),
       ),
