@@ -1,5 +1,4 @@
-import 'package:bocket_test/Folder_page/folder_home_page.dart';
-import 'package:bocket_test/WriteContent/FirstPage.dart';
+import 'package:bocket_test/WriteContent/ReviewContent.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:bocket_test/upload_page/camera_view.dart';
 import 'package:bocket_test/upload_page/image_upload.dart';
@@ -93,7 +92,7 @@ class BottomBar extends StatelessWidget {
                           Navigator.pop(context); // 모달 닫기
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context)=>FirstPage()),
+                            MaterialPageRoute(builder: (context)=>ReviewContent()),
                           );
                         },
                         child: Row(
@@ -170,7 +169,7 @@ class BottomBar extends StatelessWidget {
               case 3:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>FolderMainPage()),
+                  MaterialPageRoute(builder: (context)=>Placeholder()),
                 );
                 break;
               case 4:

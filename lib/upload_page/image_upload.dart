@@ -2,6 +2,7 @@ import 'package:bocket_test/upload_page/wirte_ornot.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
 
 class ImageUpload extends StatefulWidget {
@@ -25,9 +26,24 @@ class _ImageUploadState extends State<ImageUpload> {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
+      // Crop the picked image
+      final croppedImage = await ImageCropper().cropImage(
+        sourcePath: pickedImage.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+      );
+
+      if (croppedImage != null) {
+        setState(() {
+          _image = File(croppedImage.path);
+        });
+      } else {
+        Navigator.pop(context); // Close the screen if no image was selected
+      }
     } else {
       Navigator.pop(context); // Close the screen if no image was selected
     }

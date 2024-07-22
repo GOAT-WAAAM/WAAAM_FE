@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class FirstPage extends StatefulWidget {
+class ReviewContent extends StatefulWidget {
   @override
-  State<FirstPage> createState() => _FirstPageState();
+  State<ReviewContent> createState() => _ReviewContentState();
 }
 
-class _FirstPageState extends State<FirstPage> {
+class _ReviewContentState extends State<ReviewContent> {
   bool _reviewAgain = true;
   bool _shareContent = true;
   List<bool> _selectedReviewMode = [true, false]; // 초기값 설정
