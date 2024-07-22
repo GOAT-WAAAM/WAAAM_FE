@@ -1,4 +1,4 @@
-import 'package:bocket_test/WriteContent/FirstPage.dart';
+import 'package:bocket_test/WriteContent/ReviewContent.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -79,7 +79,7 @@ class WriteOrnot extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FirstPage(),
+                            builder: (context) => ReviewContent(),
                           ),
                         );
                       },
@@ -94,6 +94,9 @@ class WriteOrnot extends StatelessWidget {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        side: BorderSide(
+                          color:Color(0xFFD5D8DD),
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

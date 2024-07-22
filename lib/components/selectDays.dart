@@ -11,35 +11,61 @@ class SelectDays extends StatefulWidget {
 
 class _SelectDaysState extends State<SelectDays> {
   Set<Days> filters = <Days>{};
+  DateTime? startDate;
+  DateTime? endDate;
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+            onPressed: () async {
+              final DateTimeRange? picked = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2030),
+              );
+              if (picked != null) {
+                setState(() {
+                  startDate = picked.start;
+                  endDate = picked.end;
+                });
+              }
+            },
+            child: Text('날짜 선택'),
+          ),
+          if (startDate != null && endDate != null) ...[
+            Text('시작일: ${_formatDate(startDate!)}'),
+            Text('종료일: ${_formatDate(endDate!)}'),
             Wrap(
               spacing: 1,
               children: Days.values.map((Days day) {
-                final bool isSelected=filters.contains(day);
+                final bool isSelected = filters.contains(day);
                 return FilterChip(
                   backgroundColor: Colors.white,
                   showCheckmark: false,
-                  selectedColor: Colors.black,
-                  shape: const CircleBorder(
-                      side: BorderSide(color: Color(0xFFD5D8DD))),
+                  selectedColor: Color(0xFFE9F9F8),
+                  shape: isSelected
+                      ? CircleBorder(
+                    side: BorderSide(color: Color(0xFF8AE5E4)),
+                  )
+                      : CircleBorder(
+                    side: BorderSide(color: Color(0xFFD5D8DD)),
+                  ),
                   label: Text(
                     _dayToString(day),
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
+                      color: isSelected ? Color(0xFF8AE5E4) : Colors.black,
                       fontFamily: 'Pretendard',
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  selected:isSelected,
+                  selected: isSelected,
                   onSelected: (bool selected) {
                     setState(() {
                       if (selected) {
@@ -53,7 +79,9 @@ class _SelectDaysState extends State<SelectDays> {
               }).toList(),
             ),
           ],
-        ));
+        ],
+      ),
+    );
   }
 
   String _dayToString(Days day) {
@@ -75,5 +103,9 @@ class _SelectDaysState extends State<SelectDays> {
       default:
         return '';
     }
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.year}-${date.month}-${date.day}';
   }
 }
