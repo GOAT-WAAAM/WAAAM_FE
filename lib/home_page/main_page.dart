@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:bocket_test/home_page/mainpage_content.dart';
 import 'package:bocket_test/Notify/test_page.dart';
-import 'package:flutter/material.dart';
 import '../components/bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -11,8 +11,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool isNotifyExist=false;//알림 상태
-  int _selectedIndex=0;
+  bool isNotifyExist = false; // 알림 상태
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -22,12 +22,18 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Show dialog after the MainPage is fully rendered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ModalRoute.of(context)?.settings.arguments == 'showPopup') {
+        _showDialog(context);
+      }
+    });
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(54),
         child: AppBar(
-          centerTitle: false,//나중에 알림 추가되면  true로 바뀌는 함수 생성
+          centerTitle: false, // 나중에 알림 추가되면 true로 바뀌는 함수 생성
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -45,10 +51,10 @@ class _MainPageState extends State<MainPage> {
           elevation: 0,
           actions: [
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>const TestPage()),//TestPage 나중에 알림 페이지로 바꾸기
+                  MaterialPageRoute(builder: (context) => const TestPage()), // TestPage 나중에 알림 페이지로 바꾸기
                 );
               },
               child: Padding(
@@ -72,4 +78,31 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // 배경 클릭으로 다이얼로그 닫기 허용
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(
+            '‘기타’ 과목에 저장되었어요. \n 폴더>과목>기타에서 \n 볼 수 있어요 ',
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

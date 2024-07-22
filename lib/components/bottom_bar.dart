@@ -2,8 +2,8 @@ import 'package:bocket_test/Folder_page/folder_home_page.dart';
 import 'package:bocket_test/WriteContent/FirstPage.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:bocket_test/upload_page/camera_view.dart';
+import 'package:bocket_test/upload_page/image_upload.dart';
 import 'package:flutter/material.dart';
-
 import '../my_page/MyPage.dart';
 
 class BottomBar extends StatelessWidget {
@@ -71,7 +71,7 @@ class BottomBar extends StatelessWidget {
                           Navigator.pop(context); // 모달 닫기
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context)=>Placeholder()),
+                            MaterialPageRoute(builder: (context)=>ImageUpload()),
                           );
                         },
                         child: Row(
