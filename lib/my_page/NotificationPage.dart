@@ -44,22 +44,12 @@ class _AlarmSettingsScreenState extends State<AlarmSettingsScreen> {
               },
             ),
             customSwitchListTile(
-              title: '내 게시글',
-              subtitle: '작성한 게시글의 댓글, 스크랩 알림',
+              title: '업데이트 알',
+              subtitle: '서비스의 업데이트 소식을 알려드려요',
               value: myPost,
               onChanged: (bool value) {
                 setState(() {
                   myPost = value;
-                });
-              },
-            ),
-            customSwitchListTile(
-              title: '내 댓글',
-              subtitle: '작성한 댓글의 대댓글 알림',
-              value: myCmt,
-              onChanged: (bool value) {
-                setState(() {
-                  myCmt = value;
                 });
               },
             ),
@@ -81,7 +71,7 @@ class _AlarmSettingsScreenState extends State<AlarmSettingsScreen> {
       value: value,
       onChanged: onChanged,
       activeColor: Colors.grey,
-      activeTrackColor: Colors.grey.shade300,
+      activeTrackColor: Color(0xFF14C5C4),
       inactiveThumbColor: Colors.grey,
       inactiveTrackColor: Colors.grey.shade300,
     );
