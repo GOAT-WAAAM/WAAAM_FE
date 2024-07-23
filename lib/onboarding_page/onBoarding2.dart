@@ -45,9 +45,10 @@ class _onBoard2State extends State<onBoard2> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.white),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {

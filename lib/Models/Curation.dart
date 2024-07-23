@@ -89,9 +89,13 @@ class _CurationScreenState extends State<CurationScreen> with SingleTickerProvid
             final Story story = widget.stories[index];
             switch (story.media) {
               case MediaType.image:
-                return CachedNetworkImage(
-                  imageUrl: story.url,
-                  fit: BoxFit.cover,
+                return Container(
+                  width: 333,
+                  height: 444,
+                  child: CachedNetworkImage(
+                    imageUrl: story.url,
+                    fit: BoxFit.cover,
+                  ),
                 );
             }
             return const SizedBox.shrink();

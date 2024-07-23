@@ -7,6 +7,7 @@ import 'package:bocket_test/onboarding_page/onBoardingComplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'CurationPage/RandomCuration.dart';
 import 'Models/data.dart';
 import 'home_page/main_page.dart';
 import 'onboarding_page/onBoarding1.dart';
@@ -29,8 +30,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: CurationScreen(stories: stories),
+      home: RandomCuration(),
     );
   }
 }
 
+
+
+// CurationScreen(stories: stories)
