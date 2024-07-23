@@ -13,12 +13,15 @@ class _ReviewCmptState extends State<ReviewCmpt> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+
       home: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Center the children vertically
             children: [
-              Image.asset("/assets/image/contrats.png"),
+              Image.asset("assets/image/congrats.png"),
               Text(
                 "랜덤 복습 완료 - !",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
@@ -35,7 +38,7 @@ class _ReviewCmptState extends State<ReviewCmpt> {
               Container(
                 width: 335,
                 height: 56,
-                padding: const EdgeInsets.only(bottom: 94.0),
+                // padding: const EdgeInsets.only(bottom: 94.0),
                 child: SizedBox(
                   child: TextButton(
                     onPressed: () {
@@ -63,10 +66,11 @@ class _ReviewCmptState extends State<ReviewCmpt> {
                   ),
                 ),
               ),
+              SizedBox(height: 12,),
               Container(
                 width: 335,
                 height: 56,
-                padding: const EdgeInsets.only(bottom: 18.0),
+                padding: const EdgeInsets.only(bottom: 5.0),
                 child: SizedBox(
                   child: TextButton(
                     onPressed: () {

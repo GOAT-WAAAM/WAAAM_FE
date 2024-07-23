@@ -1,3 +1,4 @@
+import 'package:bocket_test/CurationPage/RandomCuration.dart';
 import 'package:bocket_test/Folder_page/folder_home_page.dart';
 import 'package:bocket_test/WriteContent/ReviewContent.dart';
 import 'package:bocket_test/home_page/main_page.dart';
@@ -161,7 +162,7 @@ class BottomBar extends StatelessWidget {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>Placeholder()),
+                  MaterialPageRoute(builder: (context)=>RandomCuration()),
                 );
                 break;
               case 2:

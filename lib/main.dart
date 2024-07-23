@@ -10,6 +10,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'CurationPage/RandomCuration.dart';
 import 'Models/data.dart';
 import 'home_page/main_page.dart';
+import 'my_page/MyPage.dart';
 import 'onboarding_page/onBoarding1.dart';
 import 'onboarding_page/onBoarding3.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: RandomCuration(),
+      home: MyHomePage(),
     );
   }
 }

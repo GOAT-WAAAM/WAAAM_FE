@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../Models/Curation.dart';
 import '../Models/data.dart';
+import '../home_page/main_page.dart';
 
 class RandomCuration extends StatefulWidget {
   const RandomCuration({super.key});
@@ -45,11 +46,11 @@ class _RandomCurationState extends State<RandomCuration> {
   Widget build(BuildContext context) {
     String bottomText = "Pilot study (test)\n"
         "– 본 연구의 소규모 테스트 실행\n"
-        "– 연구 계획이 실행 가능함치 확인 ...";
+        "– 연구 계획이 실행 가능한지 확인 ...";
 
     String popupText = "Pilot study(test)\n"
         "– 본 연구의 소규모 테스트 실행\n"
-        "– 연구 계획이 실행 가능함치 확인\n\n"
+        "– 연구 계획이 실행 가능한지 확인\n\n"
         "– Pilot studies check that:\n"
         "  * 절차대로 수행 할 수 있는지 확인\n"
         "  * interview scripts, questionnaires, experiments, etc. work appropriately\n\n"
@@ -66,7 +67,12 @@ class _RandomCurationState extends State<RandomCuration> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: IconButton(onPressed: (){}, icon: Image.asset('assets/image/X.png'),),
+          leading: IconButton(onPressed: (){
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MainPage()),
+            );
+          }, icon: Image.asset('assets/image/X.png'),),
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
