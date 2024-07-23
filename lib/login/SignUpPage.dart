@@ -1,6 +1,7 @@
 import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:flutter/material.dart';
 import '../home_page/main_page.dart';
+import '../onboarding_page/onBoarding1.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
 
@@ -58,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TextButton(onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => onBoard2()),
+                MaterialPageRoute(builder: (context) => onBoard1()),
               );
             }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
           ],
