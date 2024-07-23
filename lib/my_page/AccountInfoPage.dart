@@ -42,7 +42,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
               ),
               child: Row(
                 children: <Widget>[
-                  Image.asset('assets/image/Naver.png', width: 24, height: 24,),
+                  Image.asset('assets/image/kakao.png', width: 24, height: 24,),
                   SizedBox(width: 8),
                   Text('de5642@naver.com', style: TextStyle(fontSize: 16)),
                 ],

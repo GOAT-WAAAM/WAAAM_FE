@@ -21,7 +21,13 @@ class MainPageContent extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            RandomImageBox(),
+            Center(
+              child: Container(
+                  width: 335,
+                  height: 148,
+                  child: Image.asset('assets/image/reminderBanner.png')),
+            ),
+            // RandomImageBox(),
             SizedBox(height: 49),
             Text(
               '최근 이미지',
