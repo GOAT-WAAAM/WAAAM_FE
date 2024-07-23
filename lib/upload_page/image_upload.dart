@@ -1,3 +1,4 @@
+import 'package:bocket_test/upload_page/image_edit.dart';
 import 'package:bocket_test/upload_page/wirte_ornot.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,10 +19,10 @@ class _ImageUploadState extends State<ImageUpload> {
   @override
   void initState() {
     super.initState();
-    _pickImage();
+    getImage();
   }
 
-  Future<void> _pickImage() async {
+  Future<void> getImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
@@ -67,7 +68,7 @@ class _ImageUploadState extends State<ImageUpload> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => WriteOrnot(image: _image!), // Correctly pass the image
+          builder: (context) => ImageEdit(imageFile: _image!), // Correctly pass the image
         ),
       );
     }

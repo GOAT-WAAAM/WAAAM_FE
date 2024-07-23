@@ -85,7 +85,7 @@ class _MainPageState extends State<MainPage> {
       barrierDismissible: true, // 배경 클릭으로 다이얼로그 닫기 허용
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Text(
+          content: const Text(
             '‘기타’ 과목에 저장되었어요. \n 폴더>과목>기타에서 \n 볼 수 있어요 ',
             style: TextStyle(
               color: Colors.black,
@@ -97,7 +97,7 @@ class _MainPageState extends State<MainPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('확인'),
+              child: const Text('확인'),
             ),
           ],
         );
