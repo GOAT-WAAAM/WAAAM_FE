@@ -37,7 +37,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xFFD5D8DD)),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
@@ -64,7 +64,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                     },
                     child: Text('로그아웃', style: TextStyle(color: Colors.grey)),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.grey),
+                      side: BorderSide(color: Color(0xFFD5D8DD)),
                     ),
                   ),
                 ),
@@ -82,7 +82,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                     },
                     child: Text('회원탈퇴', style: TextStyle(color: Colors.grey)),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.grey),
+                      side: BorderSide(color: Color(0xFFD5D8DD)),
                     ),
                   ),
                 ),],

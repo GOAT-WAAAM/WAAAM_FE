@@ -27,12 +27,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-<<<<<<< HEAD
-      home: onBoardCmpt(nickname: "hello"),
-=======
       home: MainPage(),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
->>>>>>> jjerry
+
     );
   }
 }

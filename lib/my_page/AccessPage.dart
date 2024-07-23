@@ -70,7 +70,7 @@ class _AccessSettingsScreenState extends State<AccessSettingsScreen> {
       value: value,
       onChanged: onChanged,
       activeColor: Colors.grey,
-      activeTrackColor: Colors.grey.shade300,
+      activeTrackColor: Color(0xFF14C5C4),
       inactiveThumbColor: Colors.grey,
       inactiveTrackColor: Colors.grey.shade300,
     );
