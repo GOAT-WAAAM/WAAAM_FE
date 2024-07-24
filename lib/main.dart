@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:bocket_test/components/QuitPopup.dart';
 import 'package:bocket_test/login/LoginPage.dart';
 import 'package:bocket_test/login/SignUpPage.dart';
@@ -10,13 +11,20 @@ import 'home_page/main_page.dart';
 import 'my_page/MyPage.dart';
 import 'onboarding_page/onBoarding1.dart';
 import 'onboarding_page/onBoarding3.dart';
+import 'token_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await dotenv.load(fileName: '.env'); // Required by FlutterConfig
   var appKey = dotenv.env['jsAppKey'];
   KakaoSdk.init(javaScriptAppKey: appKey);
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_)=>TokenProvider()),
+    ],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

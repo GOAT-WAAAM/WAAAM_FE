@@ -1,40 +1,27 @@
 {
   "project_info": {
-    "project_number": "1234567890",
-    "firebase_url": "https://your-project-id.firebaseio.com",
-    "project_id": "your-project-id",
-    "storage_bucket": "your-project-id.appspot.com"
+    "project_number": "399796774384",
+    "firebase_url": "https://waaam-2469b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "waaam-2469b",
+    "storage_bucket": "waaam-2469b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1234567890:android:abcdef123456",
+        "mobilesdk_app_id": "1:399796774384:android:461fe77410852272be6935",
         "android_client_info": {
-          "package_name": "com.example.yourapp"
+          "package_name": "com.example.bocket_test"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "your-client-id",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.yourapp",
-            "certificate_hash": "abcdef1234567890"
-          }
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "your-api-key"
+          "current_key": "AIzaSyBv4qjx7H0fog07AlvbkiJ6dA8CQOYa_QY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "status": 1,
           "other_platform_oauth_client": []
-        },
-        "analytics_service": {
-          "status": 1
         }
       }
     }
