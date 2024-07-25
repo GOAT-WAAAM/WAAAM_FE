@@ -25,6 +25,7 @@ class MainPageContent extends StatelessWidget {
               child: Container(
                   width: 335,
                   height: 148,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
                   child: Image.asset('assets/image/reminderBanner.png')),
             ),
             // RandomImageBox(),
