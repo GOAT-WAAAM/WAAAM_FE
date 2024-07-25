@@ -1,14 +1,17 @@
 import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:bocket_test/onboarding_page/onBoardingComplete.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:bocket_test/token_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class onBoard3 extends StatefulWidget {
   final String? nickname;
-  final String? fcmToken;
 
-  const onBoard3({this.nickname, this.fcmToken});
+  const onBoard3({this.nickname});
 
   @override
   State<onBoard3> createState() => _onBoard3State();
@@ -17,11 +20,25 @@ class onBoard3 extends StatefulWidget {
 class _onBoard3State extends State<onBoard3> {
   List<bool> selectedGoals = [false, false, false, false, false];
   bool get isAnyGoalSelected => selectedGoals.contains(true);
+  String? fcmToken;
+
+  @override
+  void initState(){
+    super.initState();
+    _getFCMToken();
+  }
 
   void toggleSelection(int index) {
     setState(() {
       selectedGoals[index] = !selectedGoals[index];
     });
+  }
+
+  Future<void> _getFCMToken() async{
+    FirebaseMessaging messaging=FirebaseMessaging.instance;
+    fcmToken=await messaging.getToken();
+    print("FCM Token:$fcmToken");
+    setState(() {});
   }
 
   Future<void> _sendDataToServer() async {
@@ -30,11 +47,18 @@ class _onBoard3State extends State<onBoard3> {
       final data = {
         "nickname": widget.nickname,
         "goal": _getSelectedGoals(),
-        "fcmToken": widget.fcmToken,
+        "fcmToken": fcmToken,
       };
 
+      final tokenProvider=Provider.of<TokenProvider>(context,listen:false);
+      final accessToken=tokenProvider.accessToken;
+
+      if (accessToken==null){
+        print('Access token is missing');
+        return;
+      }
       // Send data to server
-      final response = await _sendPostRequest(data);
+      final response = await _sendPatchRequest(data,accessToken);
 
       if (response) {
         // Navigate to the next screen on success
@@ -58,23 +82,32 @@ class _onBoard3State extends State<onBoard3> {
         .join(', ');
   }
 
-  Future<bool> _sendPostRequest(Map<String, dynamic> data) async {
+  Future<bool> _sendPatchRequest(Map<String, dynamic> data,accessToken) async {
     final url = 'http://43.202.27.170/goat/auth/info';
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_ACCESS_TOKEN',  // Replace with your actual token
+      'Authorization': 'Bearer $accessToken',  // Replace with your actual token
     };
 
     try {
-      final response = await http.post(
+      final response = await http.patch(
         Uri.parse(url),
         headers: headers,
         body: jsonEncode(data),
       );
 
-      return response.statusCode == 200;  // Adjust based on your API response
-    } catch (e) {
-      print('Error sending request: $e');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if(response.statusCode==200){
+        return true;
+      }else{
+        final responseBody=json.decode(response.body);
+        print('Server response: ${responseBody['message']}');
+        return false;
+      }
+   }catch (e){
+      print('Error sending request:$e');
       return false;
     }
   }
