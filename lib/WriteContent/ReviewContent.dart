@@ -1,11 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:bocket_test/components/reviewPeriod.dart';
 import 'package:bocket_test/components/selectDays.dart';
 import 'package:bocket_test/components/selectTime.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:bocket_test/token_provider.dart';
-import 'package:provider/provider.dart';
 
 class ReviewContent extends StatefulWidget {
   @override
@@ -15,7 +13,7 @@ class ReviewContent extends StatefulWidget {
 class _ReviewContentState extends State<ReviewContent> {
   bool _reviewAgain = true;
   bool _shareContent = true;
-  List<bool> _selectedReviewMode = [true, false]; // 초기값 설정
+  List<bool> _selectedReviewMode = [true, false];
   String? selectedSubject;
   String? selectedFolder;
   List<dynamic> subjects = [];
@@ -33,23 +31,34 @@ class _ReviewContentState extends State<ReviewContent> {
   }
 
   Future<void> fetchSubjects() async {
-
-    final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=0'));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        subjects = data['results']['directoryResponseList'];
-      });
+    try {
+      final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=0'));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          subjects = data['results']['directoryResponseList'];
+        });
+      } else {
+        print('Failed to load subjects');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
   Future<void> fetchFolders(int directoryId) async {
-    final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=$directoryId'));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        folders = data['results']['directoryResponseList'];
-      });
+    try {
+      final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=$directoryId'));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          folders = data['results']['directoryResponseList'];
+        });
+      } else {
+        print('Failed to load folders');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -201,8 +210,13 @@ class _ReviewContentState extends State<ReviewContent> {
                             selectedSubject = newValue;
                             selectedFolder = null;
                             folders = [];
-                            fetchFolders(subjects.firstWhere((subject) =>
-                            subject['directoryName'] == newValue)['directoryId']);
+                            if (newValue != null) {
+                              final subject = subjects.firstWhere((subject) =>
+                              subject['directoryName'] == newValue, orElse: () => {});
+                              if (subject.isNotEmpty) {
+                                fetchFolders(subject['directoryId']);
+                              }
+                            }
                           });
                         },
                         items: subjects.map<DropdownMenuItem<String>>((dynamic value) {
@@ -250,233 +264,50 @@ class _ReviewContentState extends State<ReviewContent> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const SizedBox(height: 16),
+                  const Row(
                     children: [
-                      const Text(
-                        '복습 반복',
-                        style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                      ),
-                      Switch(
-                        activeTrackColor: const Color(0xFF14C5C4),
-                        activeColor: Colors.white,
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: const Color(0xFFBABFCA),
-                        value: _reviewAgain,
-                        onChanged: (value) {
-                          setState(() {
-                            _reviewAgain = value;
-                          });
-                        },
-                      ),
+                      Text('복습 기간',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
-                  Visibility(
-                    visible: _reviewAgain,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 35,
-                            child: ToggleButtons(
-                              isSelected: _selectedReviewMode,
-                              onPressed: (int index) {
-                                setState(() {
-                                  for (int i = 0; i < _selectedReviewMode.length; i++) {
-                                    _selectedReviewMode[i] = i == index;
-                                  }
-                                });
-                              },
-                              fillColor: Colors.white,
-                              selectedColor: Colors.black,
-                              borderRadius: BorderRadius.circular(22.0),
-                              children: [
-                                Container(
-                                  width: (MediaQuery.of(context).size.width - 44) / 2,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  decoration: BoxDecoration(
-                                    color: _selectedReviewMode[0] ? Colors.white : Color(0xFFD5D8DD),
-                                    borderRadius: const BorderRadius.horizontal(left: Radius.circular(10)),
-                                  ),
-                                  child: Text(
-                                    '자동 복습',
-                                    style: TextStyle(
-                                      fontFamily: 'Pretendard',
-                                      fontSize: 14,
-                                      color: _selectedReviewMode[0] ? Colors.black : Color(0xFFBABFCA),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: (MediaQuery.of(context).size.width - 44) / 2,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                  decoration: BoxDecoration(
-                                    color: _selectedReviewMode[1] ? Colors.white : Color(0xFFD5D8DD),
-                                    borderRadius: const BorderRadius.horizontal(right: Radius.circular(10)),
-                                  ),
-                                  child: Text(
-                                    '수동 입력',
-                                    style: TextStyle(
-                                      fontFamily: 'Pretendard',
-                                      fontSize: 14,
-                                      color: _selectedReviewMode[1] ? Colors.black : Color(0xFFBABFCA),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: _selectedReviewMode[0],
-                            child: const Column(
-                              children: [
-                                SizedBox(height: 30),
-                                Text(
-                                  '자동으로 복습할 수 있도록',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  '잊혀질 때 쯤 알림을 보내드릴게요!',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                // 여기에 자동 복습에 관련된 내용을 추가하세요.
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: _selectedReviewMode[1],
-                            child: const Column(
-                              children: [
-                                SizedBox(height: 42),
-                                const Row(
-                                  children: [
-                                    Text('복습 요일',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                    Text('*',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFFFF5050),
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                                SizedBox(height: 16),
-                                SelectDays(),
-                                SizedBox(height: 32),
-                                const Row(
-                                  children: [
-                                    Text('복습 시간',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                    Text('*',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFFFF5050),
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                                SizedBox(height: 16),
-                                SelectTimes(),
-                                SizedBox(height: 32),
-                                const Row(
-                                  children: [
-                                    Text('복습 종료일',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                    Text('*',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xFFFF5050),
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600)),
-                                  ],
-                                ),
-                                SizedBox(height: 16),
-                                ReviewPeriod(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        '게시판 공유',
-                        style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                      ),
-                      Switch(
-                        activeTrackColor: const Color(0xFF14C5C4),
-                        activeColor: Colors.white,
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: const Color(0xFFBABFCA),
-                        value: _shareContent,
-                        onChanged: (value) {
-                          setState(() {
-                            _shareContent = value;
-                          });
-                        },
-                      ),
-                    ],
+                  const SizedBox(height: 16),
+                  ReviewPeriod(
+                    initialStartDate: startDate ?? DateTime.now(),
+                    initialEndDate: endDate ?? DateTime.now().add(Duration(days: 30)),
+                    onDateRangeSelected: (startDate, endDate) {
+                      setState(() {
+                        this.startDate = startDate;
+                        this.endDate = endDate;
+                      });
+                      print('Selected start date: $startDate');
+                      print('Selected end date: $endDate');
+                    },
                   ),
                 ],
               ),
             ),
           ),
           Container(
-            height: 60,
             width: double.infinity,
+            height: 52,
+            margin: const EdgeInsets.all(20.0),
             child: ElevatedButton(
               onPressed: _isFormValid ? () {
-                // 버튼 클릭 시 처리할 로직을 여기에 추가하세요.
+                // Submit form or perform action
               } : null,
+              child: Text('제출',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w600)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: _isFormValid ? Color(0xFF14C5C4) :  Color(0xFFD9D9D9),
+                backgroundColor: _isFormValid ? Colors.blue : Colors.grey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                '내용 저장',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontFamily: 'Pretendard',
                 ),
               ),
             ),

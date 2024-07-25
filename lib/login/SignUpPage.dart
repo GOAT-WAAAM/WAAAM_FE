@@ -1,5 +1,3 @@
-import 'package:bocket_test/onboarding_page/onBoarding2.dart';
-import 'package:bocket_test/token_provider.dart';
 import 'package:flutter/material.dart';
 import '../home_page/main_page.dart';
 import '../onboarding_page/onBoarding1.dart';
@@ -8,6 +6,8 @@ import 'main_view_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
+import 'package:bocket_test/Provider/token_provider.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -60,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             SizedBox(height: 40,),
-            TextButton(onPressed: () async{
+            TextButton(
+                onPressed: () async{
               final url='http://43.202.27.170/goat/auth/signup';
               final response=await http.get(Uri.parse(url));
 

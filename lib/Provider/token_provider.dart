@@ -7,7 +7,7 @@ class TokenProvider with ChangeNotifier{
 
   void setAccessToken(String token){
 
-      _accessToken=token;
-      notifyListeners();
+    _accessToken=token;
+    notifyListeners();
   }
 }

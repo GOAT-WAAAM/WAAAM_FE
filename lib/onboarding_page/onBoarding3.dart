@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
-import 'package:bocket_test/token_provider.dart';
+import 'package:bocket_test/Provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:bocket_test/Provider/token_provider.dart';
 
 class onBoard3 extends StatefulWidget {
   final String? nickname;
@@ -43,10 +44,14 @@ class _onBoard3State extends State<onBoard3> {
 
   Future<void> _sendDataToServer() async {
     try {
-      // Prepare data to send
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final nickname = userProvider.nickname;
+      final goal = _getSelectedGoals();
+      userProvider.setGoal(goal);
+
       final data = {
-        "nickname": widget.nickname,
-        "goal": _getSelectedGoals(),
+        "nickname": nickname,
+        "goal": goal,
         "fcmToken": fcmToken,
       };
 
@@ -57,17 +62,15 @@ class _onBoard3State extends State<onBoard3> {
         print('Access token is missing');
         return;
       }
-      // Send data to server
+
       final response = await _sendPatchRequest(data,accessToken);
 
       if (response) {
-        // Navigate to the next screen on success
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => onBoardCmpt(nickname: widget.nickname)),
         );
       } else {
-        // Handle error
         print('Failed to send data to server');
       }
     } catch (e) {
@@ -78,7 +81,7 @@ class _onBoard3State extends State<onBoard3> {
   String _getSelectedGoals() {
     return selectedGoals.asMap().entries
         .where((entry) => entry.value)
-        .map((entry) => 'Goal ${entry.key + 1}')  // Customize this based on your needs
+        .map((entry) => 'Goal ${entry.key + 1}')
         .join(', ');
   }
 
@@ -86,7 +89,7 @@ class _onBoard3State extends State<onBoard3> {
     final url = 'http://43.202.27.170/goat/auth/info';
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken',  // Replace with your actual token
+      'Authorization': 'Bearer $accessToken',
     };
 
     try {

@@ -127,12 +127,12 @@ class BottomBar extends StatelessWidget {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/home_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/home_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/home_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/review_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/review_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/review_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
@@ -141,12 +141,12 @@ class BottomBar extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/folder_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/folder_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/folder_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/mypage_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/mypage_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/mypage_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
           ],

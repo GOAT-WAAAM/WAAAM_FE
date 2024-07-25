@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import '../components/LogoutPopup.dart';
 import 'AccessPage.dart';
 import 'AccountInfoPage.dart';
 import 'NotificationPage.dart';
-import '../Notify/test_page.dart';
+import '../Notify/notify_page.dart';
 import 'ProfileEditPage.dart';
 import '../components/bottom_bar.dart';
+import 'package:bocket_test/Provider/user_provider.dart';
+import 'package:bocket_test/Provider/token_provider.dart';
+
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -57,7 +61,7 @@ class _MyPageState extends State<MyPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const TestPage()), // TestPage 나중에 알림 페이지로 바꾸기
+                      builder: (context) => const NotifyPage()), // TestPage 나중에 알림 페이지로 바꾸기
                 );
               },
               child: Padding(
@@ -125,6 +129,7 @@ class MyInfo extends StatefulWidget {
 class _MyInfoState extends State<MyInfo> {
   @override
   Widget build(BuildContext context) {
+    final userProvider=Provider.of<UserProvider>(context);
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +141,7 @@ class _MyInfoState extends State<MyInfo> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("de5642" + "님", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text("${userProvider.nickname}님", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
               IconButton(
                 icon: Icon(Icons.create_outlined, size: 16, color: Color(0xFFD5D8DD)),
                 onPressed: () {
@@ -154,6 +159,7 @@ class _MyInfoState extends State<MyInfo> {
 class GoalSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userProvider=Provider.of<UserProvider>(context);
     return Center(
       child: Container(
         child: Row(
@@ -181,7 +187,7 @@ class GoalSection extends StatelessWidget {
                 color: Color(0xFFE9F9F8),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Center(child: Text("\"A+를 향해서\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
+              child: Center(child: Text("\"${userProvider.goal}\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
             ),
           ],
         ),
