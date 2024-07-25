@@ -1,11 +1,12 @@
+import 'package:bocket_test/CurationPage/RandomCuration.dart';
 import 'package:bocket_test/Notify/test_page.dart';
 import 'package:flutter/material.dart';
 
 class ImageFiles extends StatelessWidget {
   final List<String> _imageUrls = [
-    'https://images.unsplash.com/photo-1532153955177-f59af40d6472?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fCVFQSVCMyVCNSVFQiVCNiU4MHxlbnwwfHwwfHx8MA%3D%3D',
-    'https://images.unsplash.com/photo-1558021211-6d1403321394?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fCVFQSVCMyVCNSVFQiVCNiU4MHxlbnwwfHwwfHx8MA%3D%3D',
+    'assets/image/KakaoTalk_Photo_2024-07-25-15-34-06 001.jpeg',
+    'assets/image/KakaoTalk_Photo_2024-07-25-15-34-08 002.jpeg',
+    'assets/image/KakaoTalk_Photo_2024-07-25-15-34-10 003.jpeg'
     //test용 이미지 삽입
   ];
 
@@ -28,7 +29,7 @@ class ImageFiles extends StatelessWidget {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>TestPage())
+                  MaterialPageRoute(builder: (context)=>RandomCuration())
                 );
               },
               child: Container(
@@ -45,4 +46,4 @@ class ImageFiles extends StatelessWidget {
           }),
     );
   }
-}//이미지 비율 조절 필요.
+}

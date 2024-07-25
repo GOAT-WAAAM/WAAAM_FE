@@ -69,27 +69,27 @@ class _AddSubjectPopupState extends State<AddSubjectPopup> {
             },
           ),
           SizedBox(height: 20),
-          Text('아이콘', style: TextStyle(fontSize: 18)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(icons.length, (index) {
-              return IconButton(
-                icon: Container(
-                  padding: EdgeInsets.all(1.0), // Adjust padding if needed
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: icons[index],
-                ),
-                onPressed: () {
-                  setState(() {
-                    selectedIconIndex = index;
-                  });
-                },
-              );
-            }),
-          ),
-          SizedBox(height: 20),
+          // Text('아이콘', style: TextStyle(fontSize: 18)),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: List.generate(icons.length, (index) {
+          //     return IconButton(
+          //       icon: Container(
+          //         padding: EdgeInsets.all(1.0), // Adjust padding if needed
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(8.0),
+          //         ),
+          //         child: icons[index],
+          //       ),
+          //       onPressed: () {
+          //         setState(() {
+          //           selectedIconIndex = index;
+          //         });
+          //       },
+          //     );
+          //   }),
+          // ),
+          // SizedBox(height: 20),
           Text('색상 선택', style: TextStyle(fontSize: 18)),
           Wrap(
             spacing: 10,
@@ -108,7 +108,7 @@ class _AddSubjectPopupState extends State<AddSubjectPopup> {
                     color: colors[index],
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: selectedColorIndex == index ? Colors.black : Colors.transparent,
+                      color: selectedColorIndex == index ? Colors.white : Colors.transparent,
                       width: 2,
                     ),
                   ),
