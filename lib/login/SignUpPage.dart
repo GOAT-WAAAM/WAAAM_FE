@@ -1,9 +1,13 @@
-import 'package:bocket_test/onboarding_page/onBoarding2.dart';
 import 'package:flutter/material.dart';
 import '../home_page/main_page.dart';
 import '../onboarding_page/onBoarding1.dart';
 import 'kakao_login.dart';
 import 'main_view_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:bocket_test/Provider/token_provider.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -27,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 4),
-            Image.asset('assets/image/WaaamLogo.png', width: 141, height: 28),
-            Image.asset('assets/image/welcome.png'),
+            Image.asset('assets/image/logo.png', width: 141, height: 28),
+            Image.asset('assets/image/login.png', width: 359,height: 359,),
             SizedBox(height: 16),
             Text("SNS 계정으로 시작하기", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
             SizedBox(height: 33,),
@@ -56,11 +60,27 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             SizedBox(height: 40,),
-            TextButton(onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => onBoard1()),
-              );
+            TextButton(
+                onPressed: () async{
+              final url='http://43.202.27.170/goat/auth/signup';
+              final response=await http.get(Uri.parse(url));
+
+              if(response.statusCode==200){
+                final Map<String,dynamic> responseBody = json.decode(response.body);
+                if(responseBody['isSuccess']){
+                  final accessToken=responseBody['results']['accessToken'];
+                  Provider.of<TokenProvider>(context, listen:false).setAccessToken(accessToken);
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context)=>onBoard1()),
+                  );
+                } else{
+                  print('Signup failed: ${responseBody['message']}');
+                }
+              }else{
+                print('Error:${response.statusCode}');
+              }
             }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
           ],
         ),

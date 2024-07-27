@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import '../components/LogoutPopup.dart';
 import 'AccessPage.dart';
 import 'AccountInfoPage.dart';
 import 'NotificationPage.dart';
-import '../Notify/test_page.dart';
+import '../Notify/notify_page.dart';
 import 'ProfileEditPage.dart';
 import '../components/bottom_bar.dart';
+import 'package:bocket_test/Provider/user_provider.dart';
+import 'package:bocket_test/Provider/token_provider.dart';
+
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -57,7 +61,7 @@ class _MyPageState extends State<MyPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const TestPage()), // TestPage 나중에 알림 페이지로 바꾸기
+                      builder: (context) => const NotifyPage()), // TestPage 나중에 알림 페이지로 바꾸기
                 );
               },
               child: Padding(
@@ -76,37 +80,32 @@ class _MyPageState extends State<MyPage> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MyInfo(), // 1. 나의정보
               SizedBox(height: 20),
               GoalSection(), // 2. 나의 목표
               SizedBox(height: 10),
               WeeklyReviewSection(), // 3. 이번주 복습
+              SizedBox(height: 26),
+              AccessSetting(),
+              NotificationSetting(),
+              AcccountInfo(),
+              SizedBox(height: 50),
               Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 26),
-                    AccessSetting(),
-                    NotificationSetting(),
-                    AcccountInfo(),
-                    SizedBox(height: 121),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return LogoutPopup();
-                            },
-                          );
-                        },
-                        child: Text("로그아웃", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888))),
-                      ),
-                    ), // 로그아웃 페이지 연결
-                  ],
+                child: TextButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return LogoutPopup();
+                      },
+                    );
+                  },
+                  child: Text("로그아웃", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888))),
                 ),
-              ),
+              ), // 로그아웃 페이지 연결
             ],
           ),
         ),
@@ -117,6 +116,7 @@ class _MyPageState extends State<MyPage> {
       ),
     );
   }
+
 }
 
 class MyInfo extends StatefulWidget {
@@ -129,18 +129,19 @@ class MyInfo extends StatefulWidget {
 class _MyInfoState extends State<MyInfo> {
   @override
   Widget build(BuildContext context) {
+    final userProvider=Provider.of<UserProvider>(context);
     return Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.fromLTRB(5, 5, 18, 24),
-            child: Image.asset('assets/image/Ellipse.png', width: 64, height: 64),
+            margin: EdgeInsets.fromLTRB(30, 5, 18, 24),
+            child: Image.asset('assets/image/defaultProfile.png', width: 64, height: 64),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("de5642" + "님", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text("${userProvider.nickname}님", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
               IconButton(
                 icon: Icon(Icons.create_outlined, size: 16, color: Color(0xFFD5D8DD)),
                 onPressed: () {
@@ -158,44 +159,50 @@ class _MyInfoState extends State<MyInfo> {
 class GoalSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Container(
-            width: 81, height: 29,
-            decoration: BoxDecoration(
-            color: Color(0xFFE9F9F8),
-            borderRadius: BorderRadius.circular(8),
-          ),
-            child:
-            Row(
-              children: [
-                SvgPicture.asset('assets/svg/fire.svg', width: 17,height: 25,),
-                Text("나의 목표", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-              ],
+    final userProvider=Provider.of<UserProvider>(context);
+    return Center(
+      child: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 81,
+              height: 29,
+              decoration: BoxDecoration(
+                color: Color(0xFFE9F9F8),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Image.asset("assets/image/fire.png", width: 17, height: 25,),
+                  Text("나의 목표", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: 16),
-          Container(
-            width: 247,
-            height: 29,
-            decoration: BoxDecoration(
-              color: Color(0xFFE9F9F8),
-              borderRadius: BorderRadius.circular(8),
+            SizedBox(width: 16),
+            Container(
+              width: 247,
+              height: 29,
+              decoration: BoxDecoration(
+                color: Color(0xFFE9F9F8),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(child: Text("\"${userProvider.goal}\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
             ),
-            child: Center(child: Text("\"A+를 향해서\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
 
 class WeeklyReviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             width: 81, height: 29,

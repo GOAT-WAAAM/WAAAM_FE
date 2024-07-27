@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.0' // 최신 Gradle 플러그인 버전으로 업데이트
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0"
+        classpath 'com.google.gms:google-services:4.3.15' // 최신 Google Services 플러그인 버전
+    }
+}
+
 allprojects {
     repositories {
         google()

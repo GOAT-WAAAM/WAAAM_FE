@@ -25,7 +25,7 @@ class _onBoard1State extends State<onBoard1> {
                 child: Image.asset('assets/image/indicator.png'),
               ),
             ),
-            SizedBox(height: 120),
+            SizedBox(height: 90),
             onBoardCnt(),
             Expanded(
               child: Align(

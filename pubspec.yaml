@@ -52,6 +52,8 @@ dependencies:
   permission_handler: ^11.3.1
   image_editor: ^1.5.1
   cached_network_image: ^3.3.1
+  provider: ^6.1.2
+  firebase_auth: ^4.20.0
 
 dev_dependencies:
   flutter_test:

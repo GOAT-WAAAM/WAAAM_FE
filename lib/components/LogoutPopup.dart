@@ -26,6 +26,7 @@ class LogoutPopup extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
+                    SizedBox(height:10,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [

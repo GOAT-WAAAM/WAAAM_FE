@@ -1,3 +1,4 @@
+import 'package:bocket_test/CurationPage/RandomCuration.dart';
 import 'package:bocket_test/Folder_page/folder_home_page.dart';
 import 'package:bocket_test/WriteContent/ReviewContent.dart';
 import 'package:bocket_test/home_page/main_page.dart';
@@ -126,12 +127,12 @@ class BottomBar extends StatelessWidget {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/home_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/home_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/home_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/review_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/review_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/review_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
@@ -140,12 +141,12 @@ class BottomBar extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/folder_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/folder_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/folder_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
             BottomNavigationBarItem(
               icon: Image.asset('assets/image/mypage_default.png', width: 48,height: 48,),
-              activeIcon: Image.asset('assets/image/mypage_active.png',width: 48,height: 48,),
+              activeIcon: Image.asset('assets/image/mypage_default.png',width: 48,height: 48,),
               label: '', // 항목의 레이블 추가
             ),
           ],
@@ -161,7 +162,7 @@ class BottomBar extends StatelessWidget {
               case 1:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>Placeholder()),
+                  MaterialPageRoute(builder: (context)=>RandomCuration()),
                 );
                 break;
               case 2:

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bocket_test/home_page/mainpage_content.dart';
-import 'package:bocket_test/Notify/test_page.dart';
+import 'package:bocket_test/Notify/notify_page.dart';
 import '../components/bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const TestPage()), // TestPage 나중에 알림 페이지로 바꾸기
+                  MaterialPageRoute(builder: (context) => const NotifyPage()), // TestPage 나중에 알림 페이지로 바꾸기
                 );
               },
               child: Padding(

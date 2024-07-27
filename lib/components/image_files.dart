@@ -1,48 +1,160 @@
-import 'package:bocket_test/Notify/test_page.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:bocket_test/Notify/notify_page.dart';
+import 'package:provider/provider.dart';
+import 'package:bocket_test/Provider/token_provider.dart'; // 이 경로를 실제 TokenProvider가 위치한 경로로 수정하세요.
 
-class ImageFiles extends StatelessWidget {
-  final List<String> _imageUrls = [
-    'https://images.unsplash.com/photo-1532153955177-f59af40d6472?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fCVFQSVCMyVCNSVFQiVCNiU4MHxlbnwwfHwwfHx8MA%3D%3D',
-    'https://images.unsplash.com/photo-1558021211-6d1403321394?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fCVFQSVCMyVCNSVFQiVCNiU4MHxlbnwwfHwwfHx8MA%3D%3D',
-    //test용 이미지 삽입
-  ];
+class ImageFiles extends StatefulWidget {
+  @override
+  _ImageFilesState createState() => _ImageFilesState();
+}
+
+class _ImageFilesState extends State<ImageFiles> {
+  List<HomeResponseItem> _images = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchImages();
+  }
+
+  Future<void> _fetchImages() async {
+    const String url = 'http://43.202.27.170/goat/home';
+    final tokenProvider = Provider.of<TokenProvider>(context, listen: false);
+    final accessToken = tokenProvider.accessToken;
+
+    if (accessToken == null) {
+      print('Access token is missing');
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final homeResponse = HomeResponse.fromJson(data);
+        setState(() {
+          _images = homeResponse.results.homeResponseList;
+          _isLoading = false;
+        });
+      } else {
+        print('Failed to load images: ${response.statusCode}');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth=MediaQuery.sizeOf(context).width;
-    final double imageWidth=screenWidth/2-25.5;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double imageWidth = screenWidth / 2 - 25.5;
+
     return SizedBox(
       height: 400,
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing:11,
-            mainAxisSpacing: 11,
-          ),
-          itemCount: 2,
-          itemBuilder: (context,index){
-            double aspectRatio=index%2==0 ? 10/13 : 1/1;
-            return GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>TestPage())
-                );
-              },
-              child: Container(
-                width: imageWidth,
-                child: AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: Image.network(
-                    _imageUrls[index],
-                    fit: BoxFit.cover,
-                  ),
+      child: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 11,
+          mainAxisSpacing: 11,
+        ),
+        itemCount: _images.length,
+        itemBuilder: (context, index) {
+          final image = _images[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotifyPage()),
+              );
+            },
+            child: Container(
+              width: imageWidth,
+              child: AspectRatio(
+                aspectRatio: 1, // 비율을 1로 설정하여 원본 비율 유지
+                child: Image.network(
+                  image.imageUrl,
+                  fit: BoxFit.cover,
                 ),
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
-}//이미지 비율 조절 필요.
+}
+
+class HomeResponse {
+  final bool isSuccess;
+  final String code;
+  final String message;
+  final Results results;
+
+  HomeResponse({
+    required this.isSuccess,
+    required this.code,
+    required this.message,
+    required this.results,
+  });
+
+  factory HomeResponse.fromJson(Map<String, dynamic> json) {
+    return HomeResponse(
+      isSuccess: json['isSuccess'],
+      code: json['code'],
+      message: json['message'],
+      results: Results.fromJson(json['results']),
+    );
+  }
+}
+
+class Results {
+  final List<HomeResponseItem> homeResponseList;
+
+  Results({
+    required this.homeResponseList,
+  });
+
+  factory Results.fromJson(Map<String, dynamic> json) {
+    var list = json['homeResponseList'] as List;
+    List<HomeResponseItem> homeResponseList = list.map((i) => HomeResponseItem.fromJson(i)).toList();
+    return Results(homeResponseList: homeResponseList);
+  }
+}
+
+class HomeResponseItem {
+  final int reviewId;
+  final String imageUrl;
+
+  HomeResponseItem({
+    required this.reviewId,
+    required this.imageUrl,
+  });
+
+  factory HomeResponseItem.fromJson(Map<String, dynamic> json) {
+    return HomeResponseItem(
+      reviewId: json['reviewId'],
+      imageUrl: json['imageUrl'],
+    );
+  }
+}
