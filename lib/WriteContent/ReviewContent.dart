@@ -5,6 +5,9 @@ import 'package:bocket_test/components/selectTime.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../home_page/main_page.dart';
+import 'PreWrite.dart';
+
 class ReviewContent extends StatefulWidget {
   @override
   State<ReviewContent> createState() => _ReviewContentState();
@@ -79,6 +82,12 @@ class _ReviewContentState extends State<ReviewContent> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(54),
         child: AppBar(
+          leading: IconButton(onPressed:() {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => PreWrite()),
+            );
+          },icon: Image.asset('assets/image/left_chev.png')),
           centerTitle: false,
           title: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -299,8 +308,9 @@ class _ReviewContentState extends State<ReviewContent> {
               onPressed: _isFormValid ? () {
                 // Submit form or perform action
               } : null,
-              child: Text('제출',
+              child: Text('내용 저장',
                   style: TextStyle(
+
                       fontSize: 14,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w600)),

@@ -1,17 +1,34 @@
+import 'package:bocket_test/Provider/user_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'MyPage.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key?key}) : super(key: key);
+  const ProfileEditPage({Key? key}) : super(key: key);
 
   @override
   State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
+  late TextEditingController _nicknameController;
+
+  @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    _nicknameController = TextEditingController(text: userProvider.nickname);
+  }
+
+  @override
+  void dispose() {
+    _nicknameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: TopBar(),
       body: Padding(
@@ -28,7 +45,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       CircleAvatar(
                         radius: 45,
                         backgroundColor: Colors.grey[300],
-                        backgroundImage: AssetImage('assets/image/Ellipse.png'),
+                        backgroundImage: AssetImage('assets/image/defaultProfile.png'),
                       ),
                       Positioned(
                         bottom: 0,
@@ -42,15 +59,23 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  ProfileField(label: '이름', value: 'de5642'),
+                  TextField(
+                    controller: _nicknameController,
+                    decoration: InputDecoration(
+                      labelText: '닉네임',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                   SizedBox(height: 20),
-                  ProfileField(label: '전공 / 분야', value: '경영학과'),
-                  SizedBox(height: 20),
-                  ProfileField(label: '학년', value: '3학년'),
+                  ElevatedButton(
+                    onPressed: () {
+                      userProvider.setNickname(_nicknameController.text);
+                    },
+                    child: Text('저장'),
+                  ),
                 ],
               ),
             ),
-
           ],
         ),
       ),

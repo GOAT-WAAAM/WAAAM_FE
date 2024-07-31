@@ -9,7 +9,6 @@ import '../Notify/notify_page.dart';
 import 'ProfileEditPage.dart';
 import '../components/bottom_bar.dart';
 import 'package:bocket_test/Provider/user_provider.dart';
-import 'package:bocket_test/Provider/token_provider.dart';
 
 
 class MyPage extends StatefulWidget {
