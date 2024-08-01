@@ -1,14 +1,18 @@
 // ReviewContent.dart
+import 'package:bocket_test/WriteContent/Complete.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../components/add_subject_popup.dart';
 import 'PreWrite.dart';
 import 'Tab.dart';
+
 class ReviewContent extends StatefulWidget {
   @override
   State<ReviewContent> createState() => _ReviewContentState();
 }
+
 
 class _ReviewContentState extends State<ReviewContent> {
   bool _reviewAgain = true;
@@ -24,6 +28,15 @@ class _ReviewContentState extends State<ReviewContent> {
   DateTime? startDate;
   DateTime? endDate;
 
+  @override
+  void initState() {
+    super.initState();
+    fetchSubjects();
+  }
+
+
+
+
   Future<void> fetchSubjects() async {
     try {
       final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=0'));
@@ -31,6 +44,7 @@ class _ReviewContentState extends State<ReviewContent> {
         final data = jsonDecode(response.body);
         setState(() {
           subjects = data['results']['directoryResponseList'];
+          subjects.add({'directoryId': -1, 'directoryName': '새 과목 추가'});
         });
       } else {
         print('Failed to load subjects');
@@ -47,6 +61,7 @@ class _ReviewContentState extends State<ReviewContent> {
         final data = jsonDecode(response.body);
         setState(() {
           folders = data['results']['directoryResponseList'];
+          folders.add({'directoryId': -1, 'directoryName': '새 폴더 추가'});
         });
       } else {
         print('Failed to load folders');
@@ -58,9 +73,8 @@ class _ReviewContentState extends State<ReviewContent> {
 
   bool get _isFormValid {
     return title != null &&
-        content != null &&
-        selectedSubject != null &&
-        selectedFolder != null &&
+        // selectedSubject != null &&
+        // selectedFolder != null &&
         selectDays.isNotEmpty &&
         startDate != null &&
         endDate != null &&
@@ -211,27 +225,24 @@ class _ReviewContentState extends State<ReviewContent> {
                           ),
                         ),
                         value: selectedSubject,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedSubject = newValue;
-                            selectedFolder = null;
-                            folders = [];
-                            if (newValue != null) {
-                              final subject = subjects.firstWhere((subject) =>
-                              subject['directoryName'] == newValue, orElse: () => {});
-                              if (subject.isNotEmpty) {
-                                fetchFolders(subject['directoryId']);
-                              }
-                            }
-                          });
-                        },
                         items: subjects.map<DropdownMenuItem<String>>((dynamic value) {
                           return DropdownMenuItem<String>(
                             value: value['directoryName'],
                             child: Text(value['directoryName']),
                           );
                         }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue == '새 과목 추가') {
+                            // 새 과목 추가 기능 구현
+                          } else {
+                            setState(() {
+                              selectedSubject = newValue;
+                              fetchFolders(subjects.firstWhere((element) => element['directoryName'] == newValue)['directoryId']);
+                            });
+                          }
+                        },
                       ),
+
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -257,24 +268,27 @@ class _ReviewContentState extends State<ReviewContent> {
                           ),
                         ),
                         value: selectedFolder,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedFolder = newValue;
-                          });
-                        },
                         items: folders.map<DropdownMenuItem<String>>((dynamic value) {
                           return DropdownMenuItem<String>(
                             value: value['directoryName'],
                             child: Text(value['directoryName']),
                           );
                         }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue == '새 폴더 추가') {
+                          } else {
+                            setState(() {
+                              selectedFolder = newValue;
+                            });
+                          }
+                        },
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Divider(height: 30, color: Color(0xFFF7F7F7), thickness: 5,),
                   const SizedBox(height: 16),
-                  TabBarCmp(), // Include TabBarCmp here
+                  TabBarCmp(),
                 ],
               ),
             ),
@@ -285,7 +299,10 @@ class _ReviewContentState extends State<ReviewContent> {
             margin: const EdgeInsets.all(20.0),
             child: ElevatedButton(
               onPressed: _isFormValid ? () {
-                // Submit form or perform action
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => WriteCmp()),
+                );
               } : null,
               child: Text('내용 저장',
                   style: TextStyle(

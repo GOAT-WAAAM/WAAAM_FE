@@ -8,7 +8,7 @@ class ManualInput extends StatefulWidget {
 
 class _ManualInputState extends State<ManualInput> {
   List<String> weekdays = ["월", "화", "수", "목", "금", "토", "일"];
-  Set<int> selectedIndices = {}; // Set to keep track of selected indices
+  Set<int> selectedIndices = {};
   String selectedPeriod = '';
   int selectedHour = 0;
   int selectedMinute = 0;
@@ -243,11 +243,12 @@ class _ManualInputState extends State<ManualInput> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
+          contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0),
           backgroundColor: Colors.white,
           children: periods.map((period) {
             return SimpleDialogOption(
                 onPressed: () => Navigator.pop(context, period),
-                child: Text(period,),
+                child: Text(period, textAlign: TextAlign.center,),
               );
           }).toList(),
         );

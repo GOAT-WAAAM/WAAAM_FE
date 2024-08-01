@@ -181,12 +181,12 @@ class GoalSection extends StatelessWidget {
             SizedBox(width: 16),
             Container(
               width: 247,
-              height: 29,
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               decoration: BoxDecoration(
                 color: Color(0xFFE9F9F8),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Center(child: Text("\"${userProvider.goal}\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
+              child: Center(child: Text("\"${userProvider.goal}\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600), textAlign: TextAlign.center,)),
             ),
           ],
         ),

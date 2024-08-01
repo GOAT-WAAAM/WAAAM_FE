@@ -40,6 +40,10 @@ class _TabBarCmpState extends State<TabBarCmp> with SingleTickerProviderStateMix
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w600)),
                   Switch(
+                    activeTrackColor: Color(0XFF14C5C4),
+                    activeColor: Colors.white,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: Color(0XFFBABFCA),
                     value: isSwitchOn,
                     onChanged: (value) {
                       setState(() {
