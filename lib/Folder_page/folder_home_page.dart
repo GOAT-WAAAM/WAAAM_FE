@@ -353,7 +353,10 @@ class ManagementScienceScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle sorting button press
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => FolderMainPage()),
+                  );
                 },
                 child: Text('최근 복습순'),
               ),

@@ -1,5 +1,6 @@
 import 'package:bocket_test/CurationPage/RandomCuration.dart';
 import 'package:bocket_test/Folder_page/folder_home_page.dart';
+import 'package:bocket_test/WriteContent/PreWrite.dart';
 import 'package:bocket_test/WriteContent/ReviewContent.dart';
 import 'package:bocket_test/home_page/main_page.dart';
 import 'package:bocket_test/upload_page/camera_view.dart';
@@ -94,7 +95,7 @@ class BottomBar extends StatelessWidget {
                           Navigator.pop(context); // 모달 닫기
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context)=>ReviewContent()),
+                            MaterialPageRoute(builder: (context)=>PreWrite()),
                           );
                         },
                         child: Row(

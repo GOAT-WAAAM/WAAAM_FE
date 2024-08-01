@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:bocket_test/Provider/user_provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:bocket_test/Provider/token_provider.dart';
 
 class onBoard3 extends StatefulWidget {
@@ -20,6 +19,14 @@ class onBoard3 extends StatefulWidget {
 
 class _onBoard3State extends State<onBoard3> {
   List<bool> selectedGoals = [false, false, false, false, false];
+  List<String> goalTexts = [
+    "매일매일 공부",
+    "A+을 향해서",
+    "자격증 합격",
+    "시험공부는 꼼꼼히",
+    "일상 속 복습 습관 만들기"
+  ];
+
   bool get isAnyGoalSelected => selectedGoals.contains(true);
   String? fcmToken;
 
@@ -36,8 +43,8 @@ class _onBoard3State extends State<onBoard3> {
   }
 
   Future<void> _getFCMToken() async{
-    FirebaseMessaging messaging=FirebaseMessaging.instance;
-    fcmToken=await messaging.getToken();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    fcmToken = await messaging.getToken();
     print("FCM Token:$fcmToken");
     setState(() {});
   }
@@ -81,7 +88,7 @@ class _onBoard3State extends State<onBoard3> {
   String _getSelectedGoals() {
     return selectedGoals.asMap().entries
         .where((entry) => entry.value)
-        .map((entry) => 'Goal ${entry.key + 1}')
+        .map((entry) => goalTexts[entry.key])
         .join(', ');
   }
 

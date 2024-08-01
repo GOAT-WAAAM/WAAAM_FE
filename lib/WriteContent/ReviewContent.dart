@@ -1,14 +1,18 @@
+// ReviewContent.dart
+import 'package:bocket_test/WriteContent/Complete.dart';
 import 'package:flutter/material.dart';
-import 'package:bocket_test/components/reviewPeriod.dart';
-import 'package:bocket_test/components/selectDays.dart';
-import 'package:bocket_test/components/selectTime.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+import '../components/add_subject_popup.dart';
+import 'PreWrite.dart';
+import 'Tab.dart';
 
 class ReviewContent extends StatefulWidget {
   @override
   State<ReviewContent> createState() => _ReviewContentState();
 }
+
 
 class _ReviewContentState extends State<ReviewContent> {
   bool _reviewAgain = true;
@@ -30,6 +34,9 @@ class _ReviewContentState extends State<ReviewContent> {
     fetchSubjects();
   }
 
+
+
+
   Future<void> fetchSubjects() async {
     try {
       final response = await http.get(Uri.parse('http://43.202.27.170/goat/directory?directoryId=0'));
@@ -37,6 +44,7 @@ class _ReviewContentState extends State<ReviewContent> {
         final data = jsonDecode(response.body);
         setState(() {
           subjects = data['results']['directoryResponseList'];
+          subjects.add({'directoryId': -1, 'directoryName': '새 과목 추가'});
         });
       } else {
         print('Failed to load subjects');
@@ -53,6 +61,7 @@ class _ReviewContentState extends State<ReviewContent> {
         final data = jsonDecode(response.body);
         setState(() {
           folders = data['results']['directoryResponseList'];
+          folders.add({'directoryId': -1, 'directoryName': '새 폴더 추가'});
         });
       } else {
         print('Failed to load folders');
@@ -64,9 +73,8 @@ class _ReviewContentState extends State<ReviewContent> {
 
   bool get _isFormValid {
     return title != null &&
-        content != null &&
-        selectedSubject != null &&
-        selectedFolder != null &&
+        // selectedSubject != null &&
+        // selectedFolder != null &&
         selectDays.isNotEmpty &&
         startDate != null &&
         endDate != null &&
@@ -76,23 +84,28 @@ class _ReviewContentState extends State<ReviewContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(54),
-        child: AppBar(
-          centerTitle: false,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 18, bottom: 16, right: 30),
-                child: Text('복습정보 입력',
-                    style: TextStyle(fontSize: 18, fontFamily: 'Pretendard')),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        leading: IconButton(onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => PreWrite()), // Adjust as needed
+          );
+        }, icon: Image.asset('assets/image/left_chev.png')),
+        centerTitle: false,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 18, bottom: 16, right: 30),
+              child: Text('복습정보 입력',
+                  style: TextStyle(fontSize: 18, fontFamily: 'Pretendard')),
+            ),
+          ],
         ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -117,8 +130,8 @@ class _ReviewContentState extends State<ReviewContent> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    width: double.infinity,
-                    height: 42,
+                    width: 335,
+                    height: 50,
                     child: TextField(
                       onChanged: (text) {
                         setState(() {
@@ -127,11 +140,14 @@ class _ReviewContentState extends State<ReviewContent> {
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        labelText: '제목 입력',
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                        hintText: '제목 입력',
+                        hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD)
                         ),
                       ),
                     ),
@@ -148,8 +164,8 @@ class _ReviewContentState extends State<ReviewContent> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    width: double.infinity,
-                    height: 64,
+                    width: 335,
+                    height: 100,
                     child: TextField(
                       onChanged: (text) {
                         setState(() {
@@ -158,16 +174,19 @@ class _ReviewContentState extends State<ReviewContent> {
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        labelText: '내용 입력',
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                        hintText: '내용 입력',
+                        hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD)
                         ),
                       ),
+                      maxLines: null,
                     ),
                   ),
-                  const SizedBox(height: 16),
                   const Row(
                     children: [
                       Text('과목',
@@ -202,30 +221,28 @@ class _ReviewContentState extends State<ReviewContent> {
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD),
                           ),
                         ),
                         value: selectedSubject,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedSubject = newValue;
-                            selectedFolder = null;
-                            folders = [];
-                            if (newValue != null) {
-                              final subject = subjects.firstWhere((subject) =>
-                              subject['directoryName'] == newValue, orElse: () => {});
-                              if (subject.isNotEmpty) {
-                                fetchFolders(subject['directoryId']);
-                              }
-                            }
-                          });
-                        },
                         items: subjects.map<DropdownMenuItem<String>>((dynamic value) {
                           return DropdownMenuItem<String>(
                             value: value['directoryName'],
                             child: Text(value['directoryName']),
                           );
                         }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue == '새 과목 추가') {
+                            // 새 과목 추가 기능 구현
+                          } else {
+                            setState(() {
+                              selectedSubject = newValue;
+                              fetchFolders(subjects.firstWhere((element) => element['directoryName'] == newValue)['directoryId']);
+                            });
+                          }
+                        },
                       ),
+
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -245,48 +262,33 @@ class _ReviewContentState extends State<ReviewContent> {
                         hint: const Text(
                           '폴더 선택',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Pretendard',
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              color: Color(0xFFD5D8DD)
                           ),
                         ),
                         value: selectedFolder,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedFolder = newValue;
-                          });
-                        },
                         items: folders.map<DropdownMenuItem<String>>((dynamic value) {
                           return DropdownMenuItem<String>(
                             value: value['directoryName'],
                             child: Text(value['directoryName']),
                           );
                         }).toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue == '새 폴더 추가') {
+                          } else {
+                            setState(() {
+                              selectedFolder = newValue;
+                            });
+                          }
+                        },
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      Text('복습 기간',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600)),
-                    ],
-                  ),
+                  Divider(height: 30, color: Color(0xFFF7F7F7), thickness: 5,),
                   const SizedBox(height: 16),
-                  ReviewPeriod(
-                    initialStartDate: startDate ?? DateTime.now(),
-                    initialEndDate: endDate ?? DateTime.now().add(Duration(days: 30)),
-                    onDateRangeSelected: (startDate, endDate) {
-                      setState(() {
-                        this.startDate = startDate;
-                        this.endDate = endDate;
-                      });
-                      print('Selected start date: $startDate');
-                      print('Selected end date: $endDate');
-                    },
-                  ),
+                  TabBarCmp(),
                 ],
               ),
             ),
@@ -297,10 +299,14 @@ class _ReviewContentState extends State<ReviewContent> {
             margin: const EdgeInsets.all(20.0),
             child: ElevatedButton(
               onPressed: _isFormValid ? () {
-                // Submit form or perform action
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => WriteCmp()),
+                );
               } : null,
-              child: Text('제출',
+              child: Text('내용 저장',
                   style: TextStyle(
+                      color: Colors.white,
                       fontSize: 14,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w600)),

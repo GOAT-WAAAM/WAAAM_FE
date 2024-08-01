@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bocket_test/Notify/notify_page.dart';
 import 'package:provider/provider.dart';
-import 'package:bocket_test/Provider/token_provider.dart'; // 이 경로를 실제 TokenProvider가 위치한 경로로 수정하세요.
+import 'package:bocket_test/Provider/token_provider.dart';
 
 class ImageFiles extends StatefulWidget {
   @override
