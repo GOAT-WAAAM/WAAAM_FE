@@ -1,13 +1,10 @@
+// ReviewContent.dart
 import 'package:flutter/material.dart';
-import 'package:bocket_test/components/reviewPeriod.dart';
-import 'package:bocket_test/components/selectDays.dart';
-import 'package:bocket_test/components/selectTime.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../home_page/main_page.dart';
 import 'PreWrite.dart';
-
+import 'Tab.dart';
 class ReviewContent extends StatefulWidget {
   @override
   State<ReviewContent> createState() => _ReviewContentState();
@@ -26,12 +23,6 @@ class _ReviewContentState extends State<ReviewContent> {
   String? content;
   DateTime? startDate;
   DateTime? endDate;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchSubjects();
-  }
 
   Future<void> fetchSubjects() async {
     try {
@@ -79,29 +70,27 @@ class _ReviewContentState extends State<ReviewContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(54),
-        child: AppBar(
-          leading: IconButton(onPressed:() {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => PreWrite()),
-            );
-          },icon: Image.asset('assets/image/left_chev.png')),
-          centerTitle: false,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 18, bottom: 16, right: 30),
-                child: Text('복습정보 입력',
-                    style: TextStyle(fontSize: 18, fontFamily: 'Pretendard')),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => PreWrite()), // Adjust as needed
+          );
+        }, icon: Image.asset('assets/image/left_chev.png')),
+        centerTitle: false,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 18, bottom: 16, right: 30),
+              child: Text('복습정보 입력',
+                  style: TextStyle(fontSize: 18, fontFamily: 'Pretendard')),
+            ),
+          ],
         ),
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -126,8 +115,8 @@ class _ReviewContentState extends State<ReviewContent> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    width: double.infinity,
-                    height: 42,
+                    width: 335,
+                    height: 50,
                     child: TextField(
                       onChanged: (text) {
                         setState(() {
@@ -136,11 +125,14 @@ class _ReviewContentState extends State<ReviewContent> {
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        labelText: '제목 입력',
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                        hintText: '제목 입력',
+                        hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD)
                         ),
                       ),
                     ),
@@ -157,8 +149,8 @@ class _ReviewContentState extends State<ReviewContent> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    width: double.infinity,
-                    height: 64,
+                    width: 335,
+                    height: 100,
                     child: TextField(
                       onChanged: (text) {
                         setState(() {
@@ -167,16 +159,19 @@ class _ReviewContentState extends State<ReviewContent> {
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        labelText: '내용 입력',
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                        hintText: '내용 입력',
+                        hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD)
                         ),
                       ),
+                      maxLines: null,
                     ),
                   ),
-                  const SizedBox(height: 16),
                   const Row(
                     children: [
                       Text('과목',
@@ -211,6 +206,7 @@ class _ReviewContentState extends State<ReviewContent> {
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'Pretendard',
+                            color: Color(0xFFD5D8DD),
                           ),
                         ),
                         value: selectedSubject,
@@ -254,8 +250,9 @@ class _ReviewContentState extends State<ReviewContent> {
                         hint: const Text(
                           '폴더 선택',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Pretendard',
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              color: Color(0xFFD5D8DD)
                           ),
                         ),
                         value: selectedFolder,
@@ -274,28 +271,9 @@ class _ReviewContentState extends State<ReviewContent> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      Text('복습 기간',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600)),
-                    ],
-                  ),
+                  Divider(height: 30, color: Color(0xFFF7F7F7), thickness: 5,),
                   const SizedBox(height: 16),
-                  ReviewPeriod(
-                    initialStartDate: startDate ?? DateTime.now(),
-                    initialEndDate: endDate ?? DateTime.now().add(Duration(days: 30)),
-                    onDateRangeSelected: (startDate, endDate) {
-                      setState(() {
-                        this.startDate = startDate;
-                        this.endDate = endDate;
-                      });
-                      print('Selected start date: $startDate');
-                      print('Selected end date: $endDate');
-                    },
-                  ),
+                  TabBarCmp(), // Include TabBarCmp here
                 ],
               ),
             ),
@@ -310,7 +288,7 @@ class _ReviewContentState extends State<ReviewContent> {
               } : null,
               child: Text('내용 저장',
                   style: TextStyle(
-
+                      color: Colors.white,
                       fontSize: 14,
                       fontFamily: 'Pretendard',
                       fontWeight: FontWeight.w600)),
