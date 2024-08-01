@@ -72,6 +72,7 @@ class _ReviewContentState extends State<ReviewContent> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leading: IconButton(onPressed: () {
           Navigator.pushReplacement(
             context,
@@ -89,7 +90,7 @@ class _ReviewContentState extends State<ReviewContent> {
             ),
           ],
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Column(
