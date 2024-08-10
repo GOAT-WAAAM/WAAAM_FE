@@ -39,7 +39,7 @@ class _WriteCmpState extends State<WriteCmp> {
 
                 onPressed: () {Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => MainPage()), // Adjust as needed
+                  MaterialPageRoute(builder: (context) => MainPage()),
                 );},
                 child: const Text(
                   "홈으로 이동",

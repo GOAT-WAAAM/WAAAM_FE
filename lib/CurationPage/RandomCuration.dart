@@ -1,9 +1,23 @@
-import 'package:bocket_test/CurationPage/Review.dart';
 import 'package:flutter/material.dart';
-
 import '../Models/Curation.dart';
 import '../Models/data.dart';
 import '../home_page/main_page.dart';
+import 'package:bocket_test/CurationPage/Review.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      home: RandomCuration(),
+    );
+  }
+}
 
 class RandomCuration extends StatefulWidget {
   const RandomCuration({super.key});
@@ -13,27 +27,43 @@ class RandomCuration extends StatefulWidget {
 }
 
 class _RandomCurationState extends State<RandomCuration> {
+  bool isStarred = false;
+
+  void handleStar() {
+    setState(() {
+      isStarred = !isStarred;
+    });
+  }
+
   void _showTextPopup(BuildContext context, String text) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: Dialog(
-            backgroundColor: Colors.transparent,
-            child: Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
-              child: SingleChildScrollView(
-                child: Text(
-                  text,
-                  style: TextStyle(fontSize: 16),
-                ),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    text,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
             ),
           ),
@@ -41,6 +71,7 @@ class _RandomCurationState extends State<RandomCuration> {
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,28 +92,34 @@ class _RandomCurationState extends State<RandomCuration> {
         "–Pilot study(test)\n"
         "– 본 연구의 소규모 테스트 실행...";
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(onPressed: (){
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => MainPage()),
             );
-          }, icon: Image.asset('assets/image/X.png'),),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(onPressed: (){}, icon: Image.asset('assets/image/non_favorite.png')),
-            )
-          ],
+          },
+          icon: Image.asset('assets/image/X.png'),
         ),
-        body: Column(
-          children: [
-            SingleChildScrollView(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: handleStar,
+              icon: isStarred
+                  ? Image.asset('assets/image/favorite.png')
+                  : Image.asset('assets/image/non_favorite.png'),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(top: 48),
                 child: Center(
@@ -91,9 +128,6 @@ class _RandomCurationState extends State<RandomCuration> {
                       Container(
                         width: 333,
                         height: 444,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0)
-                        ),
                         child: CurationScreen(stories: stories),
                       ),
                       GestureDetector(
@@ -112,44 +146,39 @@ class _RandomCurationState extends State<RandomCuration> {
                 ),
               ),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 18.0),
-                  child: SizedBox(
-                    width: 335,
-                    height: 51,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => Review()),
-                        );
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Color(0xFF14C5C4)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)
-                              )
-                          )
-                      ),
-                      child: Text(
-                        "복습하러 가기",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 18.0),
+            child: SizedBox(
+              width: 335,
+              height: 51,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Review()),
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFF14C5C4)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                  ),
+                ),
+                child: Text(
+                  "복습하러 가기",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -92,13 +92,17 @@ class _CurationScreenState extends State<CurationScreen> with SingleTickerProvid
                 return Container(
                   width: 333,
                   height: 444,
-                  child: CachedNetworkImage(
-                    imageUrl: story.url,
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: CachedNetworkImage(
+                      imageUrl: story.url,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                 );
             }
-            return const SizedBox.shrink();
           },
           onPageChanged: (index) {
             setState(() {
