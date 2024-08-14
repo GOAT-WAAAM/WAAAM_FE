@@ -22,11 +22,10 @@ class MainPageContent extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Center(
-              child: Container(
-                  width: 335,
-                  height: 148,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
-                  child: Image.asset('assets/image/reminderBanner.png')),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset("assets/image/reminderBanner.png", width: 335, height: 148,),
+                 ),
             ),
             // RandomImageBox(),
             SizedBox(height: 49),
@@ -39,7 +38,6 @@ class MainPageContent extends StatelessWidget {
                 color: Color(0xFF111111),
               ),
             ),
-            SizedBox(height: 22),
             ImageFiles(),
           ],
         ),

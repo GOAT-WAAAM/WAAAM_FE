@@ -1,5 +1,6 @@
 import 'package:bocket_test/CurationPage/RandomCuration.dart';
 import 'package:bocket_test/CurationPage/Review.dart';
+import 'package:bocket_test/Models/Curation.dart';
 import 'package:bocket_test/Notify/notify_page.dart';
 import 'package:bocket_test/Notify/notify_permission.dart';
 import 'package:bocket_test/Provider/token_provider.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Waaam',
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: RandomCuration(),
+      home: MainPage(),
 
     );
   }

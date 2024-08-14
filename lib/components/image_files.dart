@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:bocket_test/Notify/notify_page.dart';
 import 'package:provider/provider.dart';
-import 'package:bocket_test/Provider/token_provider.dart';
+import '../Provider/token_provider.dart';
+import '../Notify/notify_page.dart';
 
 class ImageFiles extends StatefulWidget {
   @override
@@ -68,11 +68,31 @@ class _ImageFilesState extends State<ImageFiles> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double imageWidth = screenWidth / 2 - 25.5;
 
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    if (_images.isEmpty) {
+      return Center(
+        child: Column(
+          children: [
+            Image.asset(
+              "assets/image/blackWaaam.png",
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 12,),
+            Text("아직 등록한 사진이 없어요!", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),),
+            Text("아래의  + 버튼을 눌러 사진을 추가해보세요", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black))
+          ],
+        ),
+      );
+    }
+
     return SizedBox(
       height: 400,
-      child: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : GridView.builder(
+      child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 11,
@@ -91,7 +111,7 @@ class _ImageFilesState extends State<ImageFiles> {
             child: Container(
               width: imageWidth,
               child: AspectRatio(
-                aspectRatio: 1, // 비율을 1로 설정하여 원본 비율 유지
+                aspectRatio: 1,
                 child: Image.network(
                   image.imageUrl,
                   fit: BoxFit.cover,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../Models/data.dart';
 import '../Models/Curation.dart';
+import '../components/EditDelete_popup.dart';
 import 'RandomCuration.dart';
 
 class Review extends StatefulWidget {
@@ -44,7 +45,14 @@ class _ReviewState extends State<Review> {
           );},icon: Image.asset("assets/image/left_chev.png"),),
           title: Text("1. IMC 정의"),
           actions: [
-            IconButton(onPressed: (){}, icon: Image.asset("assets/image/more.png"),)
+            IconButton(onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return EditdeletePopup();
+            },
+          );
+          }, icon: Image.asset("assets/image/more.png"),)
           ],
         ),
         body: Center(

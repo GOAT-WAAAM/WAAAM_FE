@@ -4,20 +4,6 @@ import '../Models/data.dart';
 import '../home_page/main_page.dart';
 import 'package:bocket_test/CurationPage/Review.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      home: RandomCuration(),
-    );
-  }
-}
 
 class RandomCuration extends StatefulWidget {
   const RandomCuration({super.key});
