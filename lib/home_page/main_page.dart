@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(54),
         child: AppBar(
+          scrolledUnderElevation: 0,
           centerTitle: false, // 나중에 알림 추가되면 true로 바뀌는 함수 생성
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,

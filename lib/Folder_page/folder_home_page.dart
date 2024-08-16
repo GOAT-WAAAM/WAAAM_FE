@@ -20,30 +20,34 @@ class _FolderState extends State<FolderMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
         title: Container(
           width: 214,
           height: 30,
           decoration: BoxDecoration(
               color: Color(0xFFEEEEEF), borderRadius: BorderRadius.circular(12)),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: '복습내용 검색하기',
-              hintStyle: TextStyle(
-                  color: Color(0xFFBABFCA),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500),
-              prefixIcon: Icon(
-                Icons.search,
-                size: 24,
-                color: Color(0xFFA2A9B5),
+          child: Center(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: '복습내용 검색하기',
+                hintStyle: TextStyle(
+                    color: Color(0xFFBABFCA),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500),
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 24,
+                  color: Color(0xFFA2A9B5),
+                ),
+                border: InputBorder.none,
               ),
-              border: InputBorder.none,
             ),
           ),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: Image.asset( 'assets/image/bell_default.png'),
             onPressed: () {},
           ),
         ],
@@ -131,7 +135,7 @@ class _FavoriteItemState extends State<FavoriteItem> {
               alignment: Alignment.topCenter,
               heightFactor: 75 / 148,
               child: Image.asset(
-                'assets/image/FolderIMG.png',
+                'assets/image/folderIMG.png',
                 width: 148,
                 height: 148,
                 fit: BoxFit.cover,

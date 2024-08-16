@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../Models/data.dart';
 import '../Models/Curation.dart';
 import '../components/EditDelete_popup.dart';
+import '../components/QuitPopup.dart';
 import 'RandomCuration.dart';
 
 class Review extends StatefulWidget {
@@ -38,6 +39,7 @@ class _ReviewState extends State<Review> {
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(onPressed: (){Navigator.pushReplacement(
             context,
@@ -78,15 +80,16 @@ class _ReviewState extends State<Review> {
                 ),
                 Container(
                   width: 126,
-                  height: 50,
+                  height: 60,
                   padding: const EdgeInsets.only(bottom: 18.0),
                   child: SizedBox(
-
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => ReviewCmpt()),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomQuitPopup();
+                          },
                         );
                       },
                       style: ButtonStyle(

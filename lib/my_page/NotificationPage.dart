@@ -44,7 +44,7 @@ class _AlarmSettingsScreenState extends State<AlarmSettingsScreen> {
               },
             ),
             customSwitchListTile(
-              title: '업데이트 알',
+              title: '업데이트 알림',
               subtitle: '서비스의 업데이트 소식을 알려드려요',
               value: myPost,
               onChanged: (bool value) {

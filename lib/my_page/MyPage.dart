@@ -42,6 +42,7 @@ class _MyPageState extends State<MyPage> {
       },
       home: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           centerTitle: false, // 나중에 알림 추가되면 true로 바뀌는 함수 생성
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,36 +77,49 @@ class _MyPageState extends State<MyPage> {
             )
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MyInfo(), // 1. 나의정보
-              SizedBox(height: 20),
-              GoalSection(), // 2. 나의 목표
-              SizedBox(height: 10),
-              WeeklyReviewSection(), // 3. 이번주 복습
-              SizedBox(height: 26),
-              AccessSetting(),
-              NotificationSetting(),
-              AcccountInfo(),
-              SizedBox(height: 50),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return LogoutPopup();
+        body: SafeArea( // SafeArea로 감싸 화면의 경계를 넘지 않도록 함
+          child: SingleChildScrollView( // SingleChildScrollView 추가
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0), // 양옆에 여백 추가
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch, // 모든 자식 위젯들이 가로 전체를 차지하도록 설정
+                children: [
+                  SizedBox(height: 20),
+                  MyInfo(), // 1. 나의정보
+                  SizedBox(height: 20),
+                  GoalSection(), // 2. 나의 목표
+                  SizedBox(height: 10),
+                  WeeklyReviewSection(), // 3. 이번주 복습
+                  SizedBox(height: 26),
+                  AccessSetting(),
+                  NotificationSetting(),
+                  AcccountInfo(),
+                  SizedBox(height: 50),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return LogoutPopup();
+                          },
+                        );
                       },
-                    );
-                  },
-                  child: Text("로그아웃", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888))),
-                ),
-              ), // 로그아웃 페이지 연결
-            ],
+                      child: Text(
+                        "로그아웃",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF888888),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0xFF888888),
+                        ),
+                      ),
+                    ),
+                  ), // 로그아웃 페이지 연결
+                ],
+              ),
+            ),
           ),
         ),
         bottomNavigationBar: BottomBar(
@@ -158,75 +172,101 @@ class _MyInfoState extends State<MyInfo> {
 class GoalSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userProvider=Provider.of<UserProvider>(context);
-    return Center(
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 81,
-              height: 29,
-              decoration: BoxDecoration(
-                color: Color(0xFFE9F9F8),
-                borderRadius: BorderRadius.circular(8),
-              ),
+    final userProvider = Provider.of<UserProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20), // 양옆에 20px 패딩 추가
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Color(0xFFE9F9F8),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Container(
               child: Row(
                 children: [
-                  Image.asset("assets/image/fire.png", width: 17, height: 25,),
-                  Text("나의 목표", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+                  Image.asset("assets/image/fire.png", width: 17, height: 25),
+                  SizedBox(width: 8),
+                  Text(
+                    "나의 목표",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
             ),
-            SizedBox(width: 16),
-            Container(
-              width: 247,
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
               decoration: BoxDecoration(
                 color: Color(0xFFE9F9F8),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Center(child: Text("\"${userProvider.goal}\"", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600), textAlign: TextAlign.center,)),
+              child: Center(
+                child: Text(
+                  "\"${userProvider.goal}\"",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-class WeeklyReviewSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 81, height: 29,
-            decoration: BoxDecoration(
-              color: Color(0xFFF7F7F7),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child:
-                Center(child: Text("이번주 복습", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)))
-          ),
-          SizedBox(width: 16),
-          Container(
-            width: 247,
-            height: 29,
-            decoration: BoxDecoration(
-              color: Color(0xFFF7F7F7),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(child: Text("7일간 총 14번 복습했어요!", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600))),
           ),
         ],
       ),
     );
   }
 }
+
+
+
+class WeeklyReviewSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20), // 양옆에 20px 패딩 추가
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 81,
+            height: 29,
+            decoration: BoxDecoration(
+              color: Color(0xFFF7F7F7),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                "이번주 복습",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Container(
+              height: 29,
+              decoration: BoxDecoration(
+                color: Color(0xFFF7F7F7),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text(
+                  "7일간 총 14번 복습했어요!",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center, // 텍스트 중앙 정렬
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 class AccessSetting extends StatefulWidget {
   const AccessSetting({super.key});

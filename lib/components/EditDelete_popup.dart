@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'DeletePopup.dart';
+
 class EditdeletePopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class EditdeletePopup extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
                           child:
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +34,15 @@ class EditdeletePopup extends StatelessWidget {
                               ),
                       ),
                       TextButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomDeletePopup();
+                            },
+                          );
+                        },
                         child:
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

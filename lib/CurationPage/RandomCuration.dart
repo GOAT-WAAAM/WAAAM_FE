@@ -80,6 +80,7 @@ class _RandomCurationState extends State<RandomCuration> {
 
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
@@ -107,7 +108,6 @@ class _RandomCurationState extends State<RandomCuration> {
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.only(top: 48),
                 child: Center(
                   child: Column(
                     children: [
