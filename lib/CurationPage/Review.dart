@@ -1,4 +1,5 @@
 import 'package:bocket_test/CurationPage/Complete.dart';
+import 'package:bocket_test/CurationPage/contextPage.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/data.dart';
@@ -72,10 +73,20 @@ class _ReviewState extends State<Review> {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      popupText,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+                    child:
+                    TextButton(
+                      onPressed: (){
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => contextPage(context: popupText)),
+                        );
+                      },
+                      child:
+                      Text(
+                        popupText,
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    )
                   ),
                 ),
                 Container(
