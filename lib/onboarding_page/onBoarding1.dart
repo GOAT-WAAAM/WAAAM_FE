@@ -75,7 +75,7 @@ class _onBoard1State extends State<onBoard1> {
                 child: Image.asset('assets/image/indicator.png'),
               ),
             ),
-            SizedBox(height: 90),
+            SizedBox(height: 20),
             Expanded(
               child: Container(
                 child: ClipRRect(

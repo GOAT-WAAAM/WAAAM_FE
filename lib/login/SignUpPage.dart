@@ -23,66 +23,85 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "떠먹여 주는 복습",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 4),
-            Image.asset('assets/image/logo.png', width: 141, height: 28),
-            Image.asset('assets/image/login.png', width: 359,height: 359,),
-            SizedBox(height: 16),
-            Text("SNS 계정으로 시작하기", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
-            SizedBox(height: 33,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    await viewModel.login();
-                    setState(() {
-                      if (viewModel.isLogined) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainPage()),
-                        );
-                      }
-                    });
-                  },
-                  child: Image.asset(
-                    'assets/image/kakao.png',
-                    width: 58,
-                    height: 58,
-                  ),
+        child: Container(
+          padding: EdgeInsets.only(top: 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "떠먹여 주는 복습",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+          ClipRect(
+            child: Align(
+              alignment: Alignment.topCenter,
+              heightFactor: 1.0,
+              child: Transform.translate(
+                offset: Offset(0, -20), // Moves the image up by 20 pixels
+                child: Image.asset(
+                  'assets/image/login.png',
+                  width: 359,
+                  height: 339, // Increase height to accommodate the 20px crop
+                  fit: BoxFit.cover,
                 ),
-              ],
+              ),
             ),
-            SizedBox(height: 40,),
-            TextButton(
-                onPressed: () async{
-              final url='http://43.202.27.170/goat/auth/signup';
-              final response=await http.get(Uri.parse(url));
+          ),
+              // Image.asset('assets/image/login.png', width: 359,height: 359,),
+              Text("SNS 계정으로 시작하기", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),),
+              SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await viewModel.login();
+                      setState(() {
+                        if (viewModel.isLogined) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainPage()),
+                          );
+                        }
+                      });
+                    },
+                    child: Image.asset(
+                      'assets/image/kakao.png',
+                      width: 58,
+                      height: 58,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              TextButton(
+                  onPressed: () async{
+                final url='http://43.202.27.170/goat/auth/signup';
+                final response=await http.get(Uri.parse(url));
 
-              if(response.statusCode==200){
-                final Map<String,dynamic> responseBody = json.decode(response.body);
-                if(responseBody['isSuccess']){
-                  final accessToken=responseBody['results']['accessToken'];
-                  Provider.of<TokenProvider>(context, listen:false).setAccessToken(accessToken);
+                if(response.statusCode==200){
+                  final Map<String,dynamic> responseBody = json.decode(response.body);
+                  if(responseBody['isSuccess']){
+                    final accessToken=responseBody['results']['accessToken'];
+                    Provider.of<TokenProvider>(context, listen:false).setAccessToken(accessToken);
 
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context)=>onBoard1()),
-                  );
-                } else{
-                  print('Signup failed: ${responseBody['message']}');
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context)=>onBoard1()),
+                    );
+                  } else{
+                    print('Signup failed: ${responseBody['message']}');
+                  }
+                }else{
+                  print('Error:${response.statusCode}');
                 }
-              }else{
-                print('Error:${response.statusCode}');
-              }
-            }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
-          ],
+              }, child: Text("회원가입", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xFF888888), decoration: TextDecoration.underline, decorationColor: Color(0xFF888888)))),
+            ],
+          ),
         ),
       ),
     );
