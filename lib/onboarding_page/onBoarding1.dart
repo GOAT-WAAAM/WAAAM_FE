@@ -44,8 +44,21 @@ class _onBoard1State extends State<onBoard1> {
         SizedBox(height: 13),
         Text("공부한 내용을 옮겨적을", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white)),
         Text("필요없이 사진 찍어 저장해요", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white)),
-        SizedBox(height: 42),
-        Image.asset('assets/image/onBoard2.png', width: 323, height: 323),
+        ClipRect(
+          child: Align(
+            alignment: Alignment.topCenter,
+            heightFactor: 1.0,
+            child: Transform.translate(
+              offset: Offset(0, -10),
+              child: Image.asset(
+                'assets/image/onBoard2.png',
+                width: 323,
+                height: 319,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
       ],
     ),
     Column(
@@ -55,8 +68,12 @@ class _onBoard1State extends State<onBoard1> {
         SizedBox(height: 13),
         Text("뭘 복습할 지 조차 모르겠다면", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white)),
         Text("터치 한 번으로 바로 복습!", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white)),
-        SizedBox(height: 42),
-        Image.asset('assets/image/reminderBanner.png', width: 323, height: 323),
+        SizedBox(height: 20),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.asset("assets/image/reminderBanner.png", width: 335, height: 148,),
+        ),
+
       ],
     ),
   ];
@@ -78,10 +95,7 @@ class _onBoard1State extends State<onBoard1> {
             SizedBox(height: 20),
             Expanded(
               child: Container(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
                   child: _imageWidgets[_currentIndex],
-                ),
               ),
             ),
             SizedBox(height: 20),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../components/add_folder_popup.dart';
 import '../components/add_subject_popup.dart';
 import 'PreWrite.dart';
 import 'Tab.dart';
@@ -12,7 +13,6 @@ class ReviewContent extends StatefulWidget {
   @override
   State<ReviewContent> createState() => _ReviewContentState();
 }
-
 
 class _ReviewContentState extends State<ReviewContent> {
   bool _reviewAgain = true;
@@ -33,9 +33,6 @@ class _ReviewContentState extends State<ReviewContent> {
     super.initState();
     fetchSubjects();
   }
-
-
-
 
   Future<void> fetchSubjects() async {
     try {
@@ -72,9 +69,18 @@ class _ReviewContentState extends State<ReviewContent> {
   }
 
   bool get _isFormValid {
+    // 각 필드의 값을 출력하여 디버깅
+    print('Title: $title');
+    print('Selected Subject: $selectedSubject');
+    print('Selected Folder: $selectedFolder');
+    print('Select Days: ${selectDays.isNotEmpty}');
+    print('Start Date: $startDate');
+    print('End Date: $endDate');
+    print('Start Date before End Date: ${startDate?.isBefore(endDate ?? DateTime.now())}');
+
     return title != null &&
-        // selectedSubject != null &&
-        // selectedFolder != null &&
+        selectedSubject != null &&
+        selectedFolder != null &&
         selectDays.isNotEmpty &&
         startDate != null &&
         endDate != null &&
@@ -225,15 +231,33 @@ class _ReviewContentState extends State<ReviewContent> {
                           ),
                         ),
                         value: selectedSubject,
-                        items: subjects.map<DropdownMenuItem<String>>((dynamic value) {
-                          return DropdownMenuItem<String>(
-                            value: value['directoryName'],
-                            child: Text(value['directoryName']),
-                          );
-                        }).toList(),
+                        items: [
+                          ...subjects.map<DropdownMenuItem<String>>((dynamic value) {
+                            return DropdownMenuItem<String>(
+                              value: value['directoryName'],
+                              child: Text(value['directoryName']),
+                            );
+                          }).toList(),
+                          const DropdownMenuItem<String>(
+                            value: '새 과목 추가',
+                            child: Text('새 과목 추가'),
+                          ),
+                        ],
                         onChanged: (String? newValue) {
                           if (newValue == '새 과목 추가') {
-                            // 새 과목 추가 기능 구현
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddSubjectPopup(
+                                  onAddClass: (String newSubject) {
+                                    setState(() {
+                                      subjects.add({'directoryId': -1, 'directoryName': newSubject});
+                                      selectedSubject = newSubject;
+                                    });
+                                  },
+                                );
+                              },
+                            );
                           } else {
                             setState(() {
                               selectedSubject = newValue;
@@ -242,7 +266,6 @@ class _ReviewContentState extends State<ReviewContent> {
                           }
                         },
                       ),
-
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -268,20 +291,41 @@ class _ReviewContentState extends State<ReviewContent> {
                           ),
                         ),
                         value: selectedFolder,
-                        items: folders.map<DropdownMenuItem<String>>((dynamic value) {
-                          return DropdownMenuItem<String>(
-                            value: value['directoryName'],
-                            child: Text(value['directoryName']),
-                          );
-                        }).toList(),
+                        items: [
+                          ...folders.map<DropdownMenuItem<String>>((dynamic value) {
+                            return DropdownMenuItem<String>(
+                              value: value['directoryName'],
+                              child: Text(value['directoryName']),
+                            );
+                          }).toList(),
+                          const DropdownMenuItem<String>(
+                            value: '새 폴더 추가',
+                            child: Text('새 폴더 추가'),
+                          ),
+                        ],
                         onChanged: (String? newValue) {
                           if (newValue == '새 폴더 추가') {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AddFolderPopup(
+                                  onAddClass: (String newFolder) {
+                                    setState(() {
+                                      // folders 리스트에 새 폴더 추가
+                                      folders.add({'directoryId': -1, 'directoryName': newFolder});
+                                      selectedFolder = newFolder; // 선택된 폴더를 새 폴더로 설정
+                                    });
+                                  },
+                                );
+                              },
+                            );
                           } else {
                             setState(() {
                               selectedFolder = newValue;
                             });
                           }
                         },
+
                       ),
                     ),
                   ),

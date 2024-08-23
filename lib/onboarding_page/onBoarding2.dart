@@ -48,6 +48,7 @@ class _onBoard2State extends State<onBoard2> {
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       home: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
