@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ManualInput extends StatefulWidget {
+  final Function(String) onPeriodChanged;
+  final Function(int) onHourChanged;
+  final Function(int) onMinuteChanged;
+  final Function(DateTime?) onStartDateChanged;
+  final Function(DateTime?) onEndDateChanged;
+
+  ManualInput({
+    required this.onPeriodChanged,
+    required this.onHourChanged,
+    required this.onMinuteChanged,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+  });
+
   @override
   State<ManualInput> createState() => _ManualInputState();
 }
@@ -9,7 +23,7 @@ class ManualInput extends StatefulWidget {
 class _ManualInputState extends State<ManualInput> {
   List<String> weekdays = ["월", "화", "수", "목", "금", "토", "일"];
   Set<int> selectedIndices = {};
-  String selectedPeriod = '';
+  String selectedPeriod = ''; //오전 오후
   int selectedHour = 0;
   int selectedMinute = 0;
   DateTime? selectedStartDate;

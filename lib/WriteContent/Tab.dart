@@ -4,6 +4,20 @@ import 'package:flutter/material.dart';
 import 'ManualReviewInput.dart';
 
 class TabBarCmp extends StatefulWidget {
+  final Function(String) onPeriodChanged;
+  final Function(int) onHourChanged;
+  final Function(int) onMinuteChanged;
+  final Function(DateTime?) onStartDateChanged;
+  final Function(DateTime?) onEndDateChanged;
+
+  TabBarCmp({
+    required this.onPeriodChanged,
+    required this.onHourChanged,
+    required this.onMinuteChanged,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+  });
+
   @override
   _TabBarCmpState createState() => _TabBarCmpState();
 }
@@ -89,7 +103,13 @@ class _TabBarCmpState extends State<TabBarCmp> with SingleTickerProviderStateMix
                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
 
                           ),
-                          Center(child: ManualInput()),
+                          Center(child: ManualInput(
+                            onPeriodChanged: widget.onPeriodChanged,
+                            onHourChanged: widget.onHourChanged,
+                            onMinuteChanged: widget.onMinuteChanged,
+                            onStartDateChanged: widget.onStartDateChanged,
+                            onEndDateChanged: widget.onEndDateChanged,
+                          )),
                         ],
                       ),
                     ),
