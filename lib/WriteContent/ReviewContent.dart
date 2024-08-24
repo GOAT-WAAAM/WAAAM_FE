@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import  '../Provider/manualInput_provider.dart';
 import '../components/add_folder_popup.dart';
 import '../components/add_subject_popup.dart';
 import 'PreWrite.dart';
 import 'Tab.dart';
+import '../Provider/manualInput_provider.dart';
 
 class ReviewContent extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _ReviewContentState extends State<ReviewContent> {
   void initState() {
     super.initState();
     fetchSubjects();
-    final manualInputProvider = Provider.of<ManualInputProvider>(context, listen: false);
+    final manualInputProvider = Provider.of<ManualinputProvider>(context, listen: false);
 
     // manualInputProvider에서 데이터 가져오기
     selectedStartDate = manualInputProvider.startDate;
@@ -91,6 +91,28 @@ class _ReviewContentState extends State<ReviewContent> {
     bool isValid = title != null &&
         selectedSubject != null &&
         selectedFolder != null;
+        selectDays.isNotEmpty &&
+        selectedStartDate != null &&
+        selectedEndDate != null &&
+        selectedHour != null &&
+        selectedMinute != null &&
+        selectedPeriod != null &&
+        selectedStartDate!.isBefore(selectedEndDate!);
+
+    // Print information if the form is valid
+
+    print('Form is valid with the following information:');
+    print('Title: $title');
+    print('Content: $content');
+    print('Selected Subject: $selectedSubject');
+    print('Selected Folder: $selectedFolder');
+    print('Selected Days: $selectDays');
+    print('Start Date: $selectedStartDate');
+    print('End Date: $selectedEndDate');
+    print('Selected Period: $selectedPeriod');
+    print('Selected Hour: $selectedHour');
+    print('Selected Minute: $selectedMinute');
+
 
     return isValid;
   }
