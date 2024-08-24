@@ -3,6 +3,7 @@ import 'package:bocket_test/CurationPage/Review.dart';
 import 'package:bocket_test/Models/Curation.dart';
 import 'package:bocket_test/Notify/notify_page.dart';
 import 'package:bocket_test/Notify/notify_permission.dart';
+import 'package:bocket_test/Provider/manualInput_provider.dart';
 import 'package:bocket_test/Provider/token_provider.dart';
 import 'package:bocket_test/WriteContent/Complete.dart';
 import 'package:bocket_test/WriteContent/ManualReviewInput.dart';
@@ -31,6 +32,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_)=>TokenProvider()),
       ChangeNotifierProvider(create: (_)=>UserProvider()),
+      ChangeNotifierProvider(create: (_)=>ManualinputProvider()),
     ],
       child: const MyApp()));
 }

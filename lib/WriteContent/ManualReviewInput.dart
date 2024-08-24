@@ -1,5 +1,7 @@
+import 'package:bocket_test/Provider/manualInput_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ManualInput extends StatefulWidget {
   final Function(String) onPeriodChanged;
@@ -22,20 +24,14 @@ class ManualInput extends StatefulWidget {
 
 class _ManualInputState extends State<ManualInput> {
   List<String> weekdays = ["월", "화", "수", "목", "금", "토", "일"];
-  Set<int> selectedIndices = {};
-  String selectedPeriod = ''; //오전 오후
-  int selectedHour = 0;
-  int selectedMinute = 0;
-  DateTime? selectedStartDate;
-  DateTime? selectedEndDate;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:
-      SingleChildScrollView(
-        child: Container(
+    final manualInputProvider = Provider.of<ManualinputProvider>(context);
 
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
           padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,22 +66,30 @@ class _ManualInputState extends State<ManualInput> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              if (selectedIndices.contains(index)) {
-                                selectedIndices.remove(index);
+                              if (manualInputProvider.weekdays.contains(weekdays[index])) {
+                                manualInputProvider.setWeekdays(
+                                    manualInputProvider.weekdays
+                                        .where((day) => day != weekdays[index])
+                                        .toList());
                               } else {
-                                selectedIndices.add(index);
+                                manualInputProvider.setWeekdays([
+                                  ...manualInputProvider.weekdays,
+                                  weekdays[index]
+                                ]);
                               }
                             });
                           },
                           child: Container(
                             child: CircleAvatar(
-                              backgroundColor: selectedIndices.contains(index)
+                              backgroundColor: manualInputProvider.weekdays
+                                  .contains(weekdays[index])
                                   ? Color(0xFF02B6B4)
                                   : Colors.white,
                               child: Text(
                                 weekdays[index],
                                 style: TextStyle(
-                                  color: selectedIndices.contains(index)
+                                  color: manualInputProvider.weekdays
+                                      .contains(weekdays[index])
                                       ? Colors.white
                                       : Colors.black,
                                 ),
@@ -93,7 +97,8 @@ class _ManualInputState extends State<ManualInput> {
                             ),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Color(0xffD5D8DD), width: 1.0),
+                              border:
+                              Border.all(color: Color(0xffD5D8DD), width: 1.0),
                             ),
                           ),
                         );
@@ -102,7 +107,9 @@ class _ManualInputState extends State<ManualInput> {
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               // 2. 복습시간
               Container(
                 margin: EdgeInsets.only(bottom: 16.0),
@@ -130,43 +137,56 @@ class _ManualInputState extends State<ManualInput> {
                       children: [
                         TextButton(
                           style: ButtonStyle(
-                              shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
                                   side: BorderSide(
                                     color: Color(0xFFD5D8DD),
                                     width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8)
-                              ))
-                          ),
+                                  borderRadius: BorderRadius.circular(8)))),
                           onPressed: () => _selectPeriod(context),
-                          child: Text(selectedPeriod.isEmpty ? "오전/오후" : selectedPeriod, style: TextStyle(color: Color(0xFFD5D8DD)),),
+                          child: Text(
+                            manualInputProvider.period.isEmpty
+                                ? "오전/오후"
+                                : manualInputProvider.period,
+                            style: TextStyle(color: Color(0xFFD5D8DD)),
+                          ),
                         ),
                         TextButton(
                           style: ButtonStyle(
-                              shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
                                   side: BorderSide(
                                     color: Color(0xFFD5D8DD),
                                     width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8)
-                              ))
-                          ),
+                                  borderRadius: BorderRadius.circular(8)))),
                           onPressed: () => _selectHour(context),
-                          child: Text(selectedHour == 0 ? "00" : selectedHour.toString().padLeft(2, '0',), style: TextStyle(color: Color(0xFFD5D8DD)),),
+                          child: Text(
+                            manualInputProvider.hour == 0
+                                ? "00"
+                                : manualInputProvider.hour
+                                .toString()
+                                .padLeft(2, '0'),
+                            style: TextStyle(color: Color(0xFFD5D8DD)),
+                          ),
                         ),
                         Text(':'),
                         TextButton(
                           style: ButtonStyle(
-                              shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
                                   side: BorderSide(
                                     color: Color(0xFFD5D8DD),
                                     width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8)
-                              ))
-                          ),
+                                  borderRadius: BorderRadius.circular(8)))),
                           onPressed: () => _selectMinute(context),
-                          child: Text(selectedMinute == 0 ? "00" : selectedMinute.toString().padLeft(2, '0'), style: TextStyle(color: Color(0xFFD5D8DD))),
+                          child: Text(
+                            manualInputProvider.minute == 0
+                                ? "00"
+                                : manualInputProvider.minute
+                                .toString()
+                                .padLeft(2, '0'),
+                            style: TextStyle(color: Color(0xFFD5D8DD)),
+                          ),
                         ),
                       ],
                     ),
@@ -174,14 +194,16 @@ class _ManualInputState extends State<ManualInput> {
                 ),
               ),
               // Show selected time
-              if (selectedPeriod.isNotEmpty && selectedHour != 0 && selectedMinute != 0)
+              if (manualInputProvider.period.isNotEmpty &&
+                  manualInputProvider.hour != 0 &&
+                  manualInputProvider.minute != 0)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(selectedPeriod),
-                    Text(selectedHour.toString().padLeft(2, '0')),
+                    Text(manualInputProvider.period),
+                    Text(manualInputProvider.hour.toString().padLeft(2, '0')),
                     Text(':'),
-                    Text(selectedMinute.toString().padLeft(2, '0')),
+                    Text(manualInputProvider.minute.toString().padLeft(2, '0')),
                   ],
                 ),
               SizedBox(height: 16.0),
@@ -212,31 +234,43 @@ class _ManualInputState extends State<ManualInput> {
                       children: [
                         TextButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.white),
-                              shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                              backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
                                   side: BorderSide(
                                     color: Color(0xFFD5D8DD),
                                     width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                              ))
+                                  borderRadius: BorderRadius.circular(8)))),
+                          onPressed: () =>
+                              _selectDate(context, isStartDate: true),
+                          child: Text(
+                            manualInputProvider.startDate == null
+                                ? "시작일"
+                                : DateFormat('yyyy-MM-dd')
+                                .format(manualInputProvider.startDate!),
+                            style: TextStyle(color: Color(0xFFD5D8DD)),
                           ),
-                          onPressed: () => _selectDate(context, isStartDate: true),
-                          child: Text(selectedStartDate == null ? "시작일" : DateFormat('yyyy-MM-dd').format(selectedStartDate!), style: TextStyle(color: Color(0xFFD5D8DD))),
                         ),
                         TextButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.white),
-                              shape:MaterialStateProperty.all(RoundedRectangleBorder(
+                              backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
                                   side: BorderSide(
                                     color: Color(0xFFD5D8DD),
                                     width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8)
-                              ))
+                                  borderRadius: BorderRadius.circular(8)))),
+                          onPressed: () =>
+                              _selectDate(context, isStartDate: false),
+                          child: Text(
+                            manualInputProvider.endDate == null
+                                ? "종료일"
+                                : DateFormat('yyyy-MM-dd')
+                                .format(manualInputProvider.endDate!),
+                            style: TextStyle(color: Color(0xFFD5D8DD)),
                           ),
-                          onPressed: () => _selectDate(context, isStartDate: false),
-                          child: Text(selectedEndDate == null ? "종료일" : DateFormat('yyyy-MM-dd').format(selectedEndDate!), style: TextStyle(color: Color(0xFFD5D8DD))),
                         ),
                       ],
                     ),
@@ -246,8 +280,7 @@ class _ManualInputState extends State<ManualInput> {
             ],
           ),
         ),
-      )
-
+      ),
     );
   }
 
@@ -261,9 +294,12 @@ class _ManualInputState extends State<ManualInput> {
           backgroundColor: Colors.white,
           children: periods.map((period) {
             return SimpleDialogOption(
-                onPressed: () => Navigator.pop(context, period),
-                child: Text(period, textAlign: TextAlign.center,),
-              );
+              onPressed: () => Navigator.pop(context, period),
+              child: Text(
+                period,
+                textAlign: TextAlign.center,
+              ),
+            );
           }).toList(),
         );
       },
@@ -271,7 +307,9 @@ class _ManualInputState extends State<ManualInput> {
 
     if (result != null) {
       setState(() {
-        selectedPeriod = result;
+        final manualInputProvider =
+        Provider.of<ManualinputProvider>(context, listen: false);
+        manualInputProvider.setPeriod(result);
       });
     }
   }
@@ -299,7 +337,9 @@ class _ManualInputState extends State<ManualInput> {
 
     if (result != null) {
       setState(() {
-        selectedHour = result;
+        final manualInputProvider =
+        Provider.of<ManualinputProvider>(context, listen: false);
+        manualInputProvider.setHour(result);
       });
     }
   }
@@ -311,7 +351,6 @@ class _ManualInputState extends State<ManualInput> {
       builder: (BuildContext context) {
         return SimpleDialog(
           backgroundColor: Colors.white,
-
           children: minutes.map((minute) {
             return SimpleDialogOption(
               onPressed: () => Navigator.pop(context, minute),
@@ -324,7 +363,9 @@ class _ManualInputState extends State<ManualInput> {
 
     if (result != null) {
       setState(() {
-        selectedMinute = result;
+        final manualInputProvider =
+        Provider.of<ManualinputProvider>(context, listen: false);
+        manualInputProvider.setMinute(result);
       });
     }
   }
@@ -339,10 +380,12 @@ class _ManualInputState extends State<ManualInput> {
 
     if (picked != null) {
       setState(() {
+        final manualInputProvider =
+        Provider.of<ManualinputProvider>(context, listen: false);
         if (isStartDate) {
-          selectedStartDate = picked;
+          manualInputProvider.setStartDate(picked);
         } else {
-          selectedEndDate = picked;
+          manualInputProvider.setEndDate(picked);
         }
       });
     }

@@ -2,7 +2,8 @@ import 'package:bocket_test/WriteContent/Complete.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:provider/provider.dart';
+import  '../Provider/manualInput_provider.dart';
 import '../components/add_folder_popup.dart';
 import '../components/add_subject_popup.dart';
 import 'PreWrite.dart';
@@ -24,47 +25,26 @@ class _ReviewContentState extends State<ReviewContent> {
   List<dynamic> selectDays = [];
   String? title;
   String? content;
+
   DateTime? selectedStartDate;
   DateTime? selectedEndDate;
-
   String selectedPeriod = '';
   int selectedHour = 0;
   int selectedMinute = 0;
-
-  void _handlePeriodChanged(String period) {
-    setState(() {
-      selectedPeriod = period;
-    });
-  }
-
-  void _handleHourChanged(int hour) {
-    setState(() {
-      selectedHour = hour;
-    });
-  }
-
-  void _handleMinuteChanged(int minute) {
-    setState(() {
-      selectedMinute = minute;
-    });
-  }
-
-  void _handleStartDateChanged(DateTime? startDate) {
-    setState(() {
-      selectedStartDate = startDate;
-    });
-  }
-
-  void _handleEndDateChanged(DateTime? endDate) {
-    setState(() {
-      selectedEndDate = endDate;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     fetchSubjects();
+    final manualInputProvider = Provider.of<ManualInputProvider>(context, listen: false);
+
+    // manualInputProvider에서 데이터 가져오기
+    selectedStartDate = manualInputProvider.startDate;
+    selectedEndDate = manualInputProvider.endDate;
+    selectedPeriod = manualInputProvider.period ?? '';
+    selectedHour = manualInputProvider.hour ?? 0;
+    selectedMinute = manualInputProvider.minute ?? 0;
+    selectDays = manualInputProvider.weekdays ?? [];
   }
 
   Future<void> fetchSubjects() async {
@@ -108,36 +88,12 @@ class _ReviewContentState extends State<ReviewContent> {
   }
 
   bool get _isFormValid {
-    // Store the result of the validation in a variable
     bool isValid = title != null &&
         selectedSubject != null &&
         selectedFolder != null;
-        // selectDays.isNotEmpty &&
-        // selectedStartDate != null &&
-        // selectedEndDate != null &&
-        // selectedHour != null &&
-        // selectedMinute != null &&
-        // selectedPeriod != null &&
-        // selectedStartDate!.isBefore(selectedEndDate!);
 
-    // Print information if the form is valid
-
-      print('Form is valid with the following information:');
-      print('Title: $title');
-      print('Content: $content');
-      print('Selected Subject: $selectedSubject');
-      print('Selected Folder: $selectedFolder');
-      print('Selected Days: $selectDays');
-      print('Start Date: $selectedStartDate');
-      print('End Date: $selectedEndDate');
-      print('Selected Period: $selectedPeriod');
-      print('Selected Hour: $selectedHour');
-      print('Selected Minute: $selectedMinute');
-
-    // Return the validation result
     return isValid;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +105,7 @@ class _ReviewContentState extends State<ReviewContent> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => PreWrite()), // Adjust as needed
+              MaterialPageRoute(builder: (context) => PreWrite()),
             );
           },
           icon: Image.asset('assets/image/left_chev.png'),
@@ -403,11 +359,31 @@ class _ReviewContentState extends State<ReviewContent> {
                   Divider(height: 30, color: Color(0xFFF7F7F7), thickness: 5,),
                   const SizedBox(height: 16),
                   TabBarCmp(
-                    onPeriodChanged: _handlePeriodChanged,
-                    onHourChanged: _handleHourChanged,
-                    onMinuteChanged: _handleMinuteChanged,
-                    onStartDateChanged: _handleStartDateChanged,
-                    onEndDateChanged: _handleEndDateChanged,
+                    onPeriodChanged: (period) {
+                      setState(() {
+                        selectedPeriod = period;
+                      });
+                    },
+                    onHourChanged: (hour) {
+                      setState(() {
+                        selectedHour = hour;
+                      });
+                    },
+                    onMinuteChanged: (minute) {
+                      setState(() {
+                        selectedMinute = minute;
+                      });
+                    },
+                    onStartDateChanged: (startDate) {
+                      setState(() {
+                        selectedStartDate = startDate;
+                      });
+                    },
+                    onEndDateChanged: (endDate) {
+                      setState(() {
+                        selectedEndDate = endDate;
+                      });
+                    },
                   ),
                 ],
               ),
